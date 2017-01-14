@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三级联动菜单</title>
+    <style>
+        select {
+            font-family: "萝莉体 第二版";
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <select id="province">
+        <option>-请选择-</option>
+    </select>
+    <select id="city" class="hide">
+        <option>-请选择-</option>
+    </select>
+    <select id="area" class="hide">
+        <option>-请选择-</option>
+    </select>
+</div>
+<script>
+
+    var provinceList = ['北京市', '河北省', '浙江省'];
+    var cityList = [['东城区', '西城区', '海淀区'], ['廊坊市', '唐山市', '石家庄市', '承德市'], ['杭州市', '温州市', '宁波市', '嘉兴市', '绍兴市']];
+    var areasList = [
+        [
+            ['东城区1', '东城区2', '东城区3'],
+            ['西城区1', '西城区2', '西城区3'],
+            ['海淀区1', '海淀区2', '海淀区3']
+        ],
+        [
+            ['廊坊市1', '廊坊市2', '廊坊市3', '廊坊市4'],
+            ['唐山市1', '唐山市2', '唐山市3', '唐山市4'],
+            ['石家庄市1', '石家庄市2', '石家庄市3', '石家庄市4'],
+            ['承德市1', '承德市2', '承德市3', '承德市4']
+        ],
+        [
+            ['杭州市1', '杭州市2', '杭州市3', '杭州市4', '杭州市5'],
+            ['温州市1', '温州市2', '温州市3', '温州市4', '温州市5'],
+            ['宁波市1', '宁波市2', '宁波市3', '宁波市4', '宁波市5'],
+            ['嘉兴市1', '嘉兴市2', '嘉兴市3', '嘉兴市4', '嘉兴市5'],
+            ['绍兴市1', '绍兴市2', '绍兴市3', '绍兴市4', '绍兴市5']
+        ]
+    ];
+
+
+    //1.获取元素
+    var province = document.getElementById("province");
+    var city = document.getElementById("city");
+    var area = document.getElementById("area");
+
+    //2.给省的选择框赋值,
+    // ----使用自执行函数，避免污染全局变量-----
+    (function () {
+        for (var i = 0; i < provinceList.length; i++) {
+            var myOption = document.createElement("option");
+            myOption.innerHTML = provinceList[i];
+            //设置value值
+            myOption.value = i;
+            province.appendChild(myOption);
+        }
+    })();
+
+    //3.设置选择省的行为函数
+    province.onchange = function (e) {
+        city.style.display = "inline-block"; //设置第二个出现
+
+        while (city.children.length > 1) { //当省设置为“请选择”时，移除子元素
+            city.removeChild(city.lastElementChild);
+        }
+        while (area.children.length > 1) { //当市设置为“请选择”时，移除子元素
+            area.removeChild(area.lastElementChild);
+        }
+
+        if (cityList[this.value]) {//当设置为请选择时不显示列表
+            for (var i = 0; i < cityList[this.value].length; i++) { //添加市的列表
+                var myOption = document.createElement("option");
+                myOption.innerHTML = cityList[this.value][i];
+                //设置value值
+                myOption.value = i;
+                city.appendChild(myOption);
+            }
+        }
+
+    };
+
+    //4.设置选择市的行为函数
+    city.onchange = function (e) {
+        area.style.display = "inline-block"; //设置第二个出现
+
+        while (area.children.length > 1) { //当市设置为“请选择”时，移除子元素
+            area.removeChild(area.lastElementChild);
+        }
+
+        if (areasList[province.value][this.value]) {//当设置为"请选择"时不显示列表
+            for (var i = 0; i < areasList[province.value][this.value].length; i++) { //添加市的列表
+                var myOption = document.createElement("option");
+                myOption.innerHTML = areasList[province.value][this.value][i];
+                area.appendChild(myOption);
+            }
+        }
+
+    }
+
+</script>
+</body>
+</html>
