@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--
+
+-->
+<button id="btn">生成验证码</button>
+<div id="show"></div>
+</body>
+<script>
+    document.getElementById('btn').onclick = function () {
+        //1.将所有字母，数字装入一个数组备用
+        var codes = [];
+        //2.数字(0-9)大写字母(A-Z)小写字母（a-z）
+        for (var i = 48; i <= 57; i++) {
+            codes.push(i);
+        }
+        for (var i = 65; i <= 90; i++) {
+            codes.push(i);
+        }
+        for (var i = 97; i <= 122; i++) {
+            codes.push(i);
+        }
+
+        //3 从0-61之间取随机数
+        var arr = [];
+        for(var i = 0;i<4;i++){
+            var index = Math.floor(Math.random() * (61 - 0 + 1)+0);
+            var char = String.fromCharCode(codes[index]);
+            arr.push(char);
+        }
+
+        //4.输出验证码
+        var code=arr.join("");
+        show.innerHTML = "验证码:"+code;
+    }
+</script>
+</html>

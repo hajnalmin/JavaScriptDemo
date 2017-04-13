@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		.box{
+			width: 607px;
+			margin: 50px auto;
+		}
+		
+		.tab{
+			overflow: hidden;
+			border-left: 1px solid #ccc;
+		}
+		
+		.tab li{
+			float: left;
+			width: 100px;
+			font: 14px/30px "微软雅黑";
+			text-align: center;
+			background: #ffefd5;
+			border: 1px solid #ccc;
+			margin-left: -1px;
+			cursor: pointer;
+			transition: .3s;
+		}
+		
+		.items{
+			border: 1px dotted #ccc;
+			border-top: 0 none;
+		}
+		
+		.items li{
+			font: 30px/120px "微软雅黑";
+			text-align: center;
+			display: none;
+		}
+		
+		.items .active{
+			display: block;
+		}
+		
+		.tab .active{
+			background: #fff;
+			border-bottom-color:transparent ;
+			color: red;
+		}
+	</style>
+	<body>
+		<div class="box">
+			
+			<ul class="tab">
+				<li class="active">选项1</li>
+				<li>选项2</li>
+				<li>选项3</li>
+				<li>选项4</li>
+				<li>选项5</li>
+				<li>选项6</li>
+			</ul>
+			
+			<ul class="items">
+				<li class="active">内容1</li>
+				<li>内容2</li>
+				<li>内容3</li>
+				<li>内容4</li>
+				<li>内容5</li>
+				<li>内容6</li>
+			</ul>
+			
+		</div>
+	</body>
+	<script src="js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+		//1.获取内容里面的li
+		
+		var items = $('.items li');
+		
+		$('.tab li').mouseover(function(){
+				
+			//1.鼠标移入让自己添加类名吧
+			
+			$(this).addClass('active').siblings().removeClass('active');
+			
+			//2.获取当前元素索引值   根据这个索引值找到对应要显示的内容 
+			
+			var index = $(this).index();
+			
+			//3. 根据索引值找到对应的内容
+			
+			items.eq(index).addClass('active').siblings().removeClass('active');
+			
+			
+		})
+		
+	</script>
+</html>

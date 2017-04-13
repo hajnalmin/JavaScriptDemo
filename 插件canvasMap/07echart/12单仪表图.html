@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		.data {
+			width: 600px;
+			height: 400px;
+			margin: 0 auto;
+		}
+	</style>
+
+	<body>
+		<div class="data"></div>
+	</body>
+	<script src="js/echarts.common.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var chart = echarts.init(document.querySelector('.data'));
+
+option = {
+    tooltip : {
+        formatter: "{a} <br/>{b} : {c}%"
+    },
+    toolbox: {
+        feature: {
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    series: [
+        {
+            name: '业务指标',
+            type: 'gauge',
+            detail: {formatter:'{value}%'},
+            data: [{value: 50, name: '完成率'}]
+        }
+    ]
+};
+
+setInterval(function () {
+    option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+    chart.setOption(option, true);
+},2000);
+
+
+//!!!!所有统计图每次都要先进行基础配置！ 百度官方文档示例很多时间没写这句！！！
+
+		//chart.setOption(option);
+//
+		//	console.log(chart)
+	</script>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<!--
+		 1.  写一个方法能准确获取数据类型 ，type 获取数据类型时并不准确。
+		 		type 数组时得到的也是object
+
+		-->
+
+		<script>
+			//定义一个函数类
+			
+			 function type(data) {
+			 	var z;
+			 	if(data === "null"||data === z)return (data===z?z:data)+"";
+				return Object.prototype.toString.call(data).slice(8,-1).toLowerCase();
+				 
+			}
+
+			//2.判断是不是数组
+			function isArray(data){
+				return type(data) == "array";
+			}
+			
+			//3.判断是不是string
+			function isString(data){
+				return type(data) == "string";
+			}
+		
+			//4.判断是不是function
+			function isFunction(data){
+				return type(data) == "fucntion";
+			}
+
+			//5.判断是不是对象
+			function isObject(data){
+				return type(data) == "object";
+			}
+			
+			//6.判断是不是boolean
+			function isBoolean(data){
+				return type(data) == "boolean";
+			}
+			
+			//7.判断是不是null
+			function isNull(data){
+				return type(data) == "null";
+			}
+			
+			//8.判断是不是undefined
+			function isUndefined(data){
+				return type(data) == "undefined";
+			}
+			
+			//9.判断是不是number
+			function isNumber(data){
+				return type(data) == "number";
+			}
+
+
+
+
+			console.log(type([]));
+			console.log(type({}));
+			console.log(type(function(){}));
+			console.log(type(null));
+			console.log(type(undefined));
+			console.log(type("abc"));
+			console.log(type(123));
+			console.log(type(true));
+			console.log(type(new Date()));
+			console.log(type(/^\b$/));
+			console.log(type(Boolean));//类
+
+
+			//			var arr = [1,2,3];
+
+			//			console.log(zhm.type(arr));
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.echo{
+			width: 400px;
+			min-height: 260px;
+			background: pink;
+			position: absolute;
+		}
+		
+		.echo .title{
+			font: 18px/40px "微软雅黑";
+			background: #f7f7f7;
+			padding:0 40px;
+			color: #666;
+			cursor: move;
+		}
+		
+		.echo .title i{
+			float: right;
+			font:18px/40px "宋体";
+			margin-right: -27px;
+		}
+	</style>
+	<body>
+		<div class="echo">
+			<h2 class="title">注册<i>&times;</i></h2>
+		</div>
+	</body>
+	<script src="js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		//1.获取元素
+		
+		var echo = $('.echo');
+		
+		var title = echo.children('.title');
+		
+		var x = 0;
+		
+		var y = 0;
+		
+		var off = 0;//拖动开关 0关闭 1开启
+		
+		//2.添加鼠标按下事件
+		
+		title.mousedown(function(e){
+			
+			//3.根据鼠标的位置-盒子的位置得到鼠标与盒子之间的差值   这个值在移动的过程中不会改变
+			
+			x = e.clientX - echo.offset().left;
+			
+			y = e.clientY - echo.offset().top;
+			
+			off = 1;
+			
+			
+		}).mousemove(function(e){
+			
+			//阻止拖动过程中文字被选中
+			window.getSelection ? window.getSelection().removeAllRanges() : window.document.selection.empty();
+			
+			//4.添加鼠标移动事件   如果开关关闭直接终止
+			
+			if(!off){
+				
+				return ;
+			}
+			
+			var left = e.clientX - x;
+			
+			var top1 =e.clientY - y;
+			
+			//4.1可以自己定条件限制移动的范围
+			
+			top1 = top1 <0 ? 0 : top1;
+			
+			left = left<0 ? 0 : left;
+			
+			left = left > $(window).width() - echo.width() ? $(window).width() - echo.width() : left;
+			
+			//5.根据鼠标的位置减当初的差值计算出 盒子移动的位置
+			
+			echo.css({left:left,top:top1});
+			
+		}).mouseup(function(){
+			
+			//鼠标抬起关闭开关
+			
+			off = 0;
+			
+		}).mouseout(function(){
+			
+			off = 0;
+			
+		})
+		
+		
+		
+		
+		
+		
+	</script>
+</html>

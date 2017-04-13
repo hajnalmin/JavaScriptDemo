@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>牵手小球一</title>
+</head>
+<body>
+<canvas id="view"></canvas>
+<script>
+    var view = document.querySelector('#view');
+    var ps = view.getContext('2d');
+    var width = document.documentElement.clientWidth;
+    var height = document.documentElement.clientHeight;
+    view.width = width;
+    view.height = height;
+
+
+    //1.定义一个构造函数
+    function Ball(title) {
+        this.r = 15;
+        this.x = this.random(width - this.r);
+        this.y = this.random(height - this.r);
+        this.color = this.randomColor();
+        this.speedX = this.random(4);
+        this.speedY = this.random(6);
+        this.title = title;
+    }
+
+
+    //2.添加原型上的方法
+    Ball.prototype = {
+        random: function (num) {
+            return parseInt(Math.random() * num) + 1;
+        },
+        randomColor: function () {
+            return 'rgb(' + this.random(256) + ',' + this.random(256) + ',' + this.random(256) + ')';
+        },
+        move: function () {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x < this.r) {
+                this.speedX = Math.abs(this.speedX);
+            }
+            if (this.x > width - this.r) {
+                this.speedX = -this.speedX;
+            }
+
+            if (this.y < this.r) {
+                this.speedY = Math.abs(this.speedY);
+            }
+            if (this.y > height - this.r) {
+                this.speedY = -this.speedY;
+            }
+
+            this.render();
+        },
+        render: function () {
+            ps.beginPath();
+            ps.fillStyle = this.color;
+            ps.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+            ps.fill();
+            this.fillText();
+        },
+        fillText:function(){
+            ps.font = '16px 微软雅黑';
+            ps.fillText(this.title,this.x+this.r+2,this.y+this.r/2-2);
+
+        }
+
+    };
+
+    //3.定义一个数组来存放小球的实力对象
+    Ball.children = [];
+
+    //4.给Ball指定一个方法来进行实例化
+    Ball.init = function(list){
+        var list = list.split(/\s+/);
+        for(var i = 0;i<list.length;i++){
+            this.children.push(new Ball(list[i]));
+        }
+    };
+
+    //5.给Ball函数添加一个属性判断是否运行动画
+    Ball.isRun = 0;
+
+    //6.给Ball函数添加定时器方法
+    Ball.play = function(){
+        if(this.isRun) return;
+        this.isRun = 1;
+
+
+        var children = this.children;
+        setInterval(function () {
+            ps.clearRect(0, 0, width, height);
+            for (var i = 0; i < children.length; i++) {
+                children[i].move();
+
+                for(var j=0;j<children.length;j++){
+                    //i==j时不比较 因为是同一个球
+                    if(i!=j){
+                        var left = children[i].x - children[j].x;
+                        var top = children[i].y - children[j].y;
+
+                        top = Math.abs(top);
+                        if(left<=0&&left>=-200 &&top<=200){
+                            ps.beginPath();
+                            ps.moveTo(children[i].x,children[i].y);
+                            ps.lineTo(children[j].x,children[j].y);
+                            ps.strokeStyle = children[i].color;
+                            ps.stroke();
+                        }
+                    }
+                }
+            }
+        }, 70);
+    };
+
+
+    //初始化创建10个球
+    Ball.init('Html  Css Javascript Jquery  Css Javascript Jquery  Css Javascript Jquery  Css Javascript Jquery PHP Mysql XML Ajax JSONP Cavnas  BigPipe Memached Redis CSS3 HTML5');
+    //开始播放动画
+    Ball.play();
+
+
+
+
+</script>
+</body>
+</html>

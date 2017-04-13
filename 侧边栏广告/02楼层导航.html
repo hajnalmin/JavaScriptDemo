@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>楼层导航</title>
+	</head>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		.nav {
+			position: fixed;
+			left: 20px;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		
+		.nav li {
+			width: 40px;
+			font: 14px/40px "微软雅黑";
+			text-align: center;
+			border: 1px solid #ccc;
+			margin-top: -1px;
+			cursor: pointer;
+		}
+		
+		.nav .active {
+			color: red;
+			border: 1px solid red;
+		}
+		
+		.floor {
+			margin-left: 80px;
+		}
+		
+		.floor li {
+			height: 450px;
+			font: 40px/450px "微软雅黑";
+			text-align: center;
+			border: 2px solid plum;
+		}
+	</style>
+
+	<body>
+		<ul class="nav">
+			<li>1楼</li>
+			<li>2楼</li>
+			<li>3楼</li>
+			<li>4楼</li>
+			<li>5楼</li>
+			<li>6楼</li>
+			<li>7楼</li>
+			<li>8楼</li>
+		</ul>
+
+		<ul class="floor">
+			<li>第1楼</li>
+			<li>第2楼</li>
+			<li>第3楼</li>
+			<li>第4楼</li>
+			<li>第5楼</li>
+			<li>第6楼</li>
+			<li>第7楼</li>
+			<li>第8楼</li>
+		</ul>
+		<script src="js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			//1.获取元素
+			
+
+			(function(z) {
+
+				function FLoorNav(el1,el2) {
+					this.el1 = el1;
+					this.el2 = el2;
+					this.__scroll();
+					this.__click();
+				}
+
+				FLoorNav.prototype.__scroll = function() {
+					
+					//2.设置窗口滚动事件
+					$(window).scroll(function() {
+						
+						//获取滚动条距离顶部高度
+						var sTop = $(window).scrollTop();
+						//遍历所有楼层
+						this.el2.each(function() {
+							console.log(this.el2)
+							var curTop = $(this).offset().top;
+							if(sTop >= curTop) {
+								var index = $(this).index();
+								this.el1.eq(index).addClass('active').siblings().removeClass('active');
+							}
+
+						});
+					}.bind(this));
+				}
+
+				FLoorNav.prototype.__click = function() {
+					//3.设置单击楼层事件
+					this.el1.click(function() {
+						var index = $(this).index();
+						var sTop = this.el2.eq(index).offset().top;
+						//        $(window).scrollTop(sTop);
+						//设置兼容返回顶部
+						$('body,html').stop().animate({ scrollTop: sTop });
+
+					}.bind(this));
+
+				}
+
+			z.FLoorNav = FLoorNav;
+			
+			})(window);
+			
+			
+			new FLoorNav($('.nav li'),$('.floor li'));
+		</script>
+	</body>
+
+</html>

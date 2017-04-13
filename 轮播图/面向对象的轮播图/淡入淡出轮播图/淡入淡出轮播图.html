@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>淡入淡出轮播图</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			
+			img {
+				display: block;
+			}
+			
+			.carousel {
+				width: 600px;
+				height: 350px;
+				margin: 50px auto;
+				position: relative;
+				border: 1px solid #000000;
+			}
+			
+			.list li {
+				display: none;
+				position: absolute;
+				left: 0;
+				right: 0;
+			}
+			
+			.list .active {
+				display: block;
+			}
+			
+			.buttons {
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				bottom: 20px;
+			}
+			
+			.buttons li {
+				float: left;
+				width: 30px;
+				font: 16px/30px "微软雅黑";
+				margin-right: 10px;
+				border-radius: 50%;
+				background-color: rgba(64, 20, 255, 0.58);
+				color: #FFFFff;
+				text-align: center;
+				cursor: pointer;
+			}
+			
+			.buttons .active {
+				background-color: purple;
+			}
+			
+			.arrow {
+				width: 30px;
+				height: 60px;
+				background: rgba(0, 0, 0, 0.3);
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				color: #FFFFff;
+				font: 18px/60px "宋体";
+				text-align: center;
+				cursor: pointer;
+			}
+			
+			.arrow:hover {
+				background: rgba(0, 0, 0, 0.5);
+			}
+			
+			#prev {
+				left: 0;
+			}
+			
+			#next {
+				right: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--carousel start-->
+		<div class="carousel">
+			<ul class="lists">
+				<li class="active">
+					<a href="#"><img src="images/1.jpg" alt="" /></a>
+				</li>
+				<li>
+					<a href="#"><img src="images/2.jpg" alt="" /></a>
+				</li>
+				<li>
+					<a href="#"><img src="images/3.jpg" alt="" /></a>
+				</li>
+				<li>
+					<a href="#"><img src="images/4.jpg" alt="" /></a>
+				</li>
+				<li>
+					<a href="#"><img src="images/5.jpg" alt="" /></a>
+				</li>
+				<li>
+					<a href="#"><img src="images/6.jpg" alt="" /></a>
+				</li>
+			</ul>
+			<ul class="buttons">
+				<li class="active">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</ul>
+			<span class="arrow" id="prev">&lt;</span>
+			<span class="arrow" id="next">&gt;</span>
+		</div>
+		<!--carousel end-->
+	</body>
+	<script src="js/carousel.js"></script>
+	<script>
+		
+		var obj = {
+			lists:document.getElementsByClassName('lists')[0].getElementsByTagName('li'),
+			btns:document.getElementsByClassName('buttons')[0].getElementsByTagName('li'),
+			prev:document.getElementById('prev'),
+			next:document.getElementById('next'),
+			count:document.getElementsByClassName('lists')[0].getElementsByTagName('li').length
+
+		}
+		
+		
+		
+		new Carousel(obj);
+	</script>
+
+</html>

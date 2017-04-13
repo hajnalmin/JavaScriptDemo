@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+
+		<!--
+			8.  写一个兼容方法能获取浏览器可视区域大小，兼容所有浏览器！！！
+			
+			///------------和窗口元素相关的大小
+		/*	几种大小：
+			在javascript中：
+				(1)获取页面可视区域大小
+					不计算滚动条(由width+padding)
+					document.documentElement.clientWidth;
+					document.documentElement.clientHeight;
+					
+					在IE中
+					document.body.offsetWidth 
+					document.body.offsetHeight
+					
+					在BOM中
+					window.innerWidth 
+					window.innerHeight
+					
+				(2)获取元素的宽高(没有单位)
+					实际的大小:width+padding+border
+					元素.offsetWidth
+					元素.offsetHeight
+					
+					
+				(3)偏移量的大小(没有单位)
+					从自身的外边框的顶点到定位父元素的内边框
+					元素.offsetTop;
+					元素.offsetLeft;
+					
+					
+				(4)文档滚动时触发，滚动条的距离
+				
+				var scrollTop = document.body.scrollTop(非IE) ||document.documentElement.scrollTop(IE);
+				
+					
+				在jQuery中
+				
+				(1)元素.css('width')//.css("height");元素内容区的宽和高,带单位
+				         元素.width()/height();元素内容区的宽和高,不带单位
+				(2)元素.innnerWidth();//内容区+padding,不带单位
+				(3)元素.outerWidth();//内容区+padding+border,不带单位，
+			 	        元素.outerWidth(true);//内容区+padding+border+margin,不带单位，
+			 	        
+			 	        
+			 	(4)获取元素对于视口的偏移量
+			 		元素.offset().top/.left
+			 		元素.offset({top:'XXX',left:"XXX"});//设置
+			 		
+			 	(5)偏移量的大小(没有单位)
+					从自身的外边框的顶点到定位父元素的内边框
+					元素.position().top/.left
+			 		元素.position({top:'XXX',left:"XXX"});//设置
+					
+				(6)获取和设置滚动条的距离
+					$('body').scrollTop()(非IE)||$('html').scrollTop();
+					
+					
+			
+			
+			
+		-->
+		<script src="http://apps.bdimg.com/libs/jquery/1.10.0/jquery.js"></script>
+		<!--<script src="jquery-1.7.2.js"></script>-->
+		<script>
+			//原生的js
+
+			/*function getBrowserInfo() {
+				if(document.documentElement.clientWidth) {
+					return {
+						id: 1,
+						width: document.documentElement.clientWidth,
+						height: document.documentElement.clientHeight
+					}
+				} else if(document.body.offsetWidth) {
+					return {
+						id: 2,
+						width: document.body.offsetWidth,
+						height: document.body.offsetHeight
+					}
+				}
+			}
+
+			console.log(getBrowserInfo());*/
+			
+			
+			
+			//jq版的
+			
+			function getBrowserInfo() {
+				if($(window).width()) {
+					return {
+						id: 1,
+						width: $(window).width(),
+						height: $(window).height()
+					}
+				} else if($(window.body).width()) {
+					return {
+						id: 1,
+						width: $(window.body).width(),
+						height: $(window.body).height()
+					}
+				}
+			}
+
+			console.log(getBrowserInfo());
+			
+			
+		</script>
+	</body>
+
+</html>

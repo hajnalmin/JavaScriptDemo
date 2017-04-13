@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>瀑布流</title>
+    <link rel="stylesheet" href="css/initialize.css"/>
+    <style>
+        .wrap {
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .in {
+            float: left;
+        }
+
+        .img {
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid pink;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #666;
+        }
+    </style>
+</head>
+<body>
+<!--
+    思路：
+        1.首先放入15张图片，让其浮动
+        2.在js中，控制从第二行开始，设置定位
+        3.设置到达滚动条时继续创建DIV，判断当前视口高度+滚动条高度>最后一个元素的offsetTop即可
+        4.当页面缩小再变大时，不能正常显示，解决办法，给第一行的元素设置其position为static即可
+
+    步骤：
+        1.动态创建标签和添加img
+        2.排列img元素
+        3.到达滚动条时继续创建DIV，添加img元素
+        4.窗口改变重新排列元素
+-->
+<div class="wrap">
+    <!--   <div class="in">
+           <div class="img"><img src="img/i1.jpg" alt=""/></div>
+       </div>
+       -->
+</div>
+
+<script>
+    window.onload = function () {
+        var imgData = {
+            "data": [
+                {"src": "i1.jpg"}, {"src": "i2.jpg"}, {"src": "i3.jpg"}, {"src": "i4.jpg"}, {"src": "i5.jpg"}, {"src": "i6.jpg"},
+                {"src": "i7.jpg"}, {"src": "i8.jpg"}, {"src": "i9.jpg"}, {"src": "i10.jpg"}, {"src": "i11.jpg"}, {"src": "i12.jpg"},
+                {"src": "i13.jpg"}, {"src": "i14.jpg"}, {"src": "i15.jpg"}
+            ]
+        };
+
+        //1.动态创建标签和添加img
+        createDiv();
+        function createDiv() {
+            for (var i = 0; i < imgData.data.length; i++) {
+                var d1 = document.createElement("div");
+                var d2 = document.createElement("div");
+                var myimg = document.createElement("img");
+                d1.className = "in";
+                d2.className = "img";
+                myimg.src = "img/" + imgData.data[i].src;
+
+                document.getElementsByClassName("wrap").item(0).appendChild(d1);
+                d1.appendChild(d2);
+                d2.appendChild(myimg);
+            }
+            place();
+        }
+
+
+        //2.排列img元素
+        function place() {
+            //1.获取元素
+            var wrap = document.getElementsByClassName("wrap").item(0);
+            var myin = document.getElementsByClassName("in");
+            var num = Math.floor(document.documentElement.clientWidth / myin[0].offsetWidth);
+            wrap.style.width = num * myin[0].offsetWidth + 'px';
+            if (num <= 0) return;
+
+            //2.定义一个数组存放第一行元素的高度
+            var arrHeight = [];
+            for (var i = 0; i < myin.length; i++) {
+                if (i < num) {
+                    arrHeight.push(myin[i].offsetHeight);
+                    myin[i].style.position = "static";
+
+                } else {
+                    myin[i].style.position = "absolute";
+                    var minHeight = Math.min.apply(null, arrHeight);
+                    myin[i].style.top = minHeight + 'px';
+                    var index = arrHeight.indexOf(minHeight);
+                    myin[i].style.left = myin[index].offsetLeft + 'px';
+                    arrHeight[index] += myin[i].offsetHeight;
+
+                }
+            }
+        }
+
+
+        //3.到达滚动条时继续创建DIV，添加img元素
+        window.onscroll = function () {
+            var myin = document.getElementsByClassName("in");
+            var windowHeight = document.documentElement.clientHeight;//可视区高度
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;//滚动条高度
+            if (scrollTop + windowHeight > myin[myin.length - 1].offsetTop) {
+                createDiv();
+            }
+        };
+
+        //4.窗口改变重新排列元素
+        window.onresize = function () {
+            place();
+        };
+    };
+</script>
+</body>
+</html>

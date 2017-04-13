@@ -1,0 +1,28 @@
+/*
+    步骤:
+        1.控制最外层的父元素为position：relative
+           设置margin：0 auto，在js中设置width使其居中
+        2.控制内层
+           所有元素浮动
+        3.图片包裹层样式
+           padding: 10px;
+           margin: 10px;
+           border: 1px solid pink;
+           border-radius: 5px;
+           box-shadow: 0 0 5px #666;
+
+*/
+.wrap{
+    position: relative;
+    margin: 0 auto;
+}
+.in{
+    float: left;
+}
+.img{
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid pink;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #666;
+}

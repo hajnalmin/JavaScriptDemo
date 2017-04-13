@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+</body>
+<script type="text/javascript">
+
+    /**
+     * coords.latitude	十进制数的纬度
+     coords.longitude	十进制数的经度
+     coords.accuracy	位置精度
+     coords.altitude	海拔，海平面以上以米计
+     coords.altitudeAccuracy	位置的海拔精度
+     coords.heading	方向，从正北开始以度计
+     coords.speed	速度，以米/每秒计
+     timestamp	响应的日期/时间
+     *
+     */
+
+    //1.判断是否支持定位
+
+    if(navigator.geolocation){
+        //获取定位接口
+        navigator.geolocation.getCurrentPosition(function(pos){
+            //获取位置信息
+            var coords =  pos.coords;
+           alert('经度：'+coords.longitude+'纬度：'+coords.latitude);
+            alert(pos)
+        },function(){
+            alert('定位失败')
+        })
+    }else{
+        alert('对不起您的浏览器不支持');
+    }
+
+</script>
+</html>

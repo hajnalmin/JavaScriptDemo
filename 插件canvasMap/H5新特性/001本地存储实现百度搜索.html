@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>模拟百度搜索框</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .box {
+            width: 600px;
+            height: 40px;
+            margin: 50px auto;
+            border: 1px solid #c5c5c5;
+        }
+
+        input {
+            width: 500px;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+            text-indent: 10px;
+        }
+
+        button {
+            width: 95px;
+            height: 100%;
+            box-sizing: border-box;
+            background: #3385ff;
+            color: #FFFFFF;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .list {
+            width: 500px;
+            font: 16px/30px "微软雅黑";
+            border: 1px solid #c5c5c5;
+            text-indent: 1em;
+            background: #FFFFFF;
+            position: absolute;
+            z-index: 9999;
+            margin-left: -1px;
+            display: none;
+        }
+
+        .list li:hover {
+            background: #F8F8F8;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="box">
+    <input type="text"/>
+    <button>百度一下</button>
+    <ul class="list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</div>
+
+<script src="jquery-1.7.2.js"></script>
+<script>
+    //1.获取元素
+    var input = $('input');
+    var list = $('.list');
+
+    //2.设置元素默认获取焦点
+    input.focus();
+
+    //3.添加获取焦点事件
+    input.focus(function () {
+        //3.1获取表单的值
+        var txt = this.value;
+        //3.2如果搜索框已经有值，则显示列表
+        if (txt) {
+            list.show();
+        }
+    });
+
+    //4.添加失去焦点的事件
+    input.blur(function () {
+        //隐藏列表，需要添加延时事件，因为blur事件太快，瞬间隐藏列表导致单击不显示文字
+        setTimeout(list.hide, 200);
+    });
+
+
+    //5.给列表添加事件委托
+    list.on('click', '.list li', function () {
+        //5.1获取列表内容
+        var txt = $(this).html();
+        //5.2更新表单内的值为当前所选元素
+        input.val(txt);
+        //5.3隐藏列表
+        list.hide();
+    });
+
+    //6.添加键盘事件
+    input.keydown(function () {
+
+        //6.1.键盘按下瞬间 触发 键盘事件，但是文字在输入框显示还需要一点时间，哪怕晚一毫秒都可能得不到
+        // 延迟执行获取表单数据
+        setTimeout(function () {
+
+            //6.1.1获取表单内的值
+            var txt = input.val();
+            //6.2根据当前搜索内容,查找数据，如果有一样的，则显示，没有则不显示
+            var hot = localStorage.getItem('hot');
+            hot = hot ? $.parseJSON(hot) : [];
+
+
+            //6.3 遍历 检测数组中是否包含要搜索的字符串
+
+            var html = "";
+            $.each(hot, function () {
+                //如果当前搜索中包含指定的关键字，则保存搜索记录
+                if (this.indexOf(txt) > -1) {
+                    html += "<li>" + this + "</li>"
+                }
+            });
+
+
+            //6.4更新列表 显示或者隐藏
+            list.html(html).show();
+
+            //三种方法
+            //html ? "" : list.hide();
+            //if(html="") list.hide();
+            //list.html(html)[html?show:hide]();
+            html || list.hide();
+        }, 200);
+
+    });
+
+    //7，添加搜索事件
+    $("button").click(function () {
+        //7.1获取输入的关键字，并且不为空时存储到本地
+        var txt = input.val();
+        if (!txt)return;
+        //7.2读取本地搜索记录
+        var search = localStorage.getItem('hot');
+        search = search ? $.parseJSON(search) : [];
+        search.unshift(txt);
+        localStorage.setItem('hot', JSON.stringify(search));
+    })
+
+
+</script>
+
+
+</body>
+</html>

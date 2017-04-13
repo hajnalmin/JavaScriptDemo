@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		.banner{
+			width: 1200px;
+			margin: 50px auto;
+			border: 1px solid #000;
+			overflow: hidden;
+		}
+		
+		.list{
+			overflow: hidden;
+			width: 1500px;
+		}
+		
+		.list li{
+			float: left;
+			width: 200px;
+			height: 350px;
+		}
+		
+		.list a{
+			display: block;
+			height: 100%;
+		}
+		
+	</style>
+	<body>
+		<!--ul.list>li*6>a[href=# style="background-image:url(images/banner/$.jpg)"]-->
+		
+		<div class="banner">
+			<ul class="list">
+				<li><a href="#" style="background-image:url(images/banner/1.jpg)"></a></li>
+				<li><a href="#" style="background-image:url(images/banner/2.jpg)"></a></li>
+				<li><a href="#" style="background-image:url(images/banner/3.jpg)"></a></li>
+				<li><a href="#" style="background-image:url(images/banner/4.jpg)"></a></li>
+				<li><a href="#" style="background-image:url(images/banner/5.jpg)"></a></li>
+				<li><a href="#" style="background-image:url(images/banner/6.jpg)"></a></li>
+			</ul>
+		</div>
+	</body>
+	<script src="js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		/**
+		 * 鼠标移入 当前元素宽度200~600  +400   
+		 *       其它小伙伴宽度200~120   -80     -400/5
+		 * 
+		 */
+		
+		$('.list li').hover(function(){
+			
+			//1.鼠标移入  自己宽变600  其它小伙伴 宽变120 
+			
+			$(this).stop().animate({width:600}).siblings().stop().animate({width:130});
+			
+			//如果有元素掉下去 应该是 减少的宽度值比增加的宽度值要小  （减的少）
+			//如果出现边缘出现空白 应该是  减少的的宽度值比增加的宽度值要大 （减的多）
+			
+		},function(){
+			
+			//2.鼠标移出所有li宽要变200
+			
+			$(this).parent().children().stop().animate({width:200});
+			
+		})
+		
+		
+	</script>
+</html>

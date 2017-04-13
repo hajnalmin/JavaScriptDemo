@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<!--
+		  3.写一个方法将数据(num,str)转换成数字，可保留小数
+			
+			原生的toFixed(num) 方法可把 Number 四舍五入为指定小数位数的数字。
+						              参数num	必需。规定小数的位数，是 0 ~ 20 之间的值，包括 0 和 20，有些实现可以支持更大的数值范围。
+									如果省略了该参数，将用 0 代替。
+			
+		-->
+
+		<script>
+			//定义一个保留两位小数，没有四舍五入
+
+			/*	function  getToFixed(str){
+					return str.replace(/(^[+-]?\d+\.\d{2})\d+$/,'$1')
+					
+				}
+				
+				console.log(getToFixed('12.3450'));
+				console.log(getToFixed('12.0432'));*/
+
+			
+
+			function test(arr) {
+				var obj = {};
+				for(var i = 0; i < arr.length; i++) {
+					var temp = arr[i];
+					if(!obj[temp]) {
+						obj[temp]=i;
+					} else {
+						obj[temp]++;
+					}
+				}
+				for(var key in obj){
+					console.log(key+"===="+obj[key]);
+				}
+			}
+			var arr = 'abbbbb';
+			test(arr);
+		</script>
+	</body>
+
+</html>

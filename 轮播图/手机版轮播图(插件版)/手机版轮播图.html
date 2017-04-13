@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<link rel="stylesheet" href="css/main.css" />
+	</head>
+
+	<body>
+
+		<!--banner开始-->
+		<div class="main_visual">
+			<div class="main_image">
+				<ul>
+					<li><span class="img_3"></span></li>
+					<li><span class="img_4"></span></li>
+					<li><span class="img_1"></span></li>
+					<li><span class="img_2"></span></li>
+				</ul>
+			</div>
+			<div class="flicking_con">
+				<a href="#">1</a>
+				<a href="#">2</a>
+				<a href="#">3</a>
+				<a href="#">4</a>
+			</div>
+		</div>
+		<!--banner结束-->
+
+		<script src='js/zepto.min.js'></script>
+		<script src='js/touch.js'></script>
+		<script src='js/public.js'></script>
+		<script src="js/jquery-1.7.1.min.js"></script>
+		<script src="js/jquery.event.drag-1.5.min.js"></script>
+		<script src="js/jquery.touchSlider.js"></script>
+		<script type="text/javascript">
+				$(document).ready(function() {
+
+				
+				$dragBln = false;
+
+				$(".main_image").touchSlider({
+					flexible: true,
+					speed: 200,
+					paging: $(".flicking_con a"),
+					counter: function(e) {
+						$(".flicking_con a").removeClass("on").eq(e.current - 1).addClass("on");
+					}
+				});
+
+				$(".main_image").bind("mousedown", function() {
+					$dragBln = false;
+				});
+
+				$(".main_image").bind("dragstart", function() {
+					$dragBln = true;
+				});
+
+				$(".main_image a").click(function() {
+					if($dragBln) {
+						return false;
+					}
+				});
+
+				timer = setInterval(function() {
+					$("#btn_next").click();
+				}, 5000);
+
+				$(".main_visual").hover(function() {
+					clearInterval(timer);
+				}, function() {
+					timer = setInterval(function() {
+						$("#btn_next").click();
+					}, 5000);
+				});
+
+				$(".main_image").bind("touchstart", function() {
+					clearInterval(timer);
+				}).bind("touchend", function() {
+					timer = setInterval(function() {
+						$("#btn_next").click();
+					}, 5000);
+				});
+
+			});
+				
+				
+				
+		</script>
+		
+		
+		
+		
+	</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		hr{
+			margin: 10px;
+		}
+		
+		.wrap{
+			width: 1000px;
+			margin: 0 auto;
+			padding: 10px;
+		}
+		
+		/*第一个demo用的样式*/
+		.nav{
+			overflow: hidden;
+		}
+		
+		.nav li{
+			float: left;
+			width: 30px;
+			font: 16px/30px "微软雅黑";
+			border-radius: 50%;
+			background: pink;
+			text-align: center;
+			color: #fff;
+			margin: 0 5px;
+		}
+		
+		.nav .active{
+			background: deeppink;
+		}
+		
+		/*第二个demo用的样式*/
+		
+		.box{
+			overflow: hidden;
+		}
+		
+		.box>div>*{
+			float: left;
+			width: 30px;
+			font: 16px/30px "微软雅黑";
+			border-radius: 50%;
+			background: skyblue;
+			text-align: center;
+			color: #fff;
+			margin: 0 5px;
+		}
+		
+		.box .on{
+			background: darkblue;
+		}
+		
+	</style>
+	<body>
+		<div class="wrap">
+			
+			<ul class="nav">
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</ul>
+			<hr />
+			<div class="box">
+				<div>
+					<div>1</div>
+					<p >2</p>
+					<h1>3</h1>
+					<h2>4</h2>
+					<h3>5</h3>
+					<h4>6</h4>
+				</div>
+				<button>上一个</button>
+				<button>下一个</button>
+			</div>
+			
+			
+		</div>
+	</body>
+	<script src="js/nick.1.0.2.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/NickActive.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		console.log(nick.type(document.body))
+	
+		/**
+		 * 鼠标移入元素父级或移入下一个及上一个按钮都将自动停止播放，鼠标离开后会重新开启播放
+		 * 
+		 */
+		
+		//1.选择需要使用选项卡的元素执行.tab方法即可实现选项卡切换
+		
+		$('.nav li').tab();
+		
+		//2.tab方法的配置参数使用
+		
+		$('.box>div>*').tab({//要进行切换的元素并非一定是兄弟关系只要被选中的元素都会进行切换
+			
+			active:'on',//设置被选中元素的类名，默认值为active
+			
+			auto:true, //设置是否启用自动播放，默认值为true
+			
+			trigger:'mouseover',//设置触发的事件类型，默认值为click，即单击切换
+			
+			delay:1,//设置自动播放时的间隔时间，默认值为3秒
+			
+			index:3, //设置默认显示的元素的索引值，当有元素有active指定的类名时该设置无效
+			
+			next:'.box button:nth-of-type(2)',//指定一个元素单击可以切换到下一个，可以是选择器也可以是DOM或nick对象
+			
+			prev:document.querySelector('.box button:nth-of-type(1)')//指定一个元素单击可以切换到上一个，可以是选择器也可以是DOM或nick对象
+			
+		});
+		
+		
+		
+		
+	</script>
+</html>

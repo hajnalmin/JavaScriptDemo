@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		用户名：<input type="text" name="uname" /><br /><br />
+		
+		密码： <input type="password" name="pwd" /><br /><br />
+		
+		邮箱： <input type="text" name="email" /><br /><br />
+		
+		手机： <input type="text" name="phone" /><br /><br />
+		
+		验证码： <input type="text" name="code" /><img src="code/catpcha.php"/><br /><br />
+		
+		<button>提交</button>
+
+		<script src="jquery-1.7.2.js"></script>
+		<script>
+			/*
+							配置文件
+									
+									
+									
+									 
+						 * */
+
+			var config = {
+				uname: {
+					reg: /^[a-z]\w{5,13}$/i,
+					error: '用户名不合法，格式应为：字母开头，后面跟上字母、数字、下划线，长度在6-14位',
+					success: '正确'
+				},
+
+				upwd: {
+					reg: /^\S{6,16}$/gi,
+					error: '密码不合法，格式应为：任意字符，但是不能包含空格，6-16位',
+					success: '正确'
+
+				},
+				uemail: {
+					reg: /^\w{4,18}@[^-][\w\u4e00-\u9fa5\-]*[^-]\.(com)|(cn)|(com\.cn)|(net)|(gov\.cn)$/,
+					error: '用户名不合法，格式应为：4~18个字符，可使用字母、数字、下划线，需以字母开头',
+					success: '正确'
+
+				},
+				utel: {
+					reg: /^1[34578]\d{9}$/,
+					error: '手机号不合法，格式应为：11位手机号',
+					success: '正确'
+
+				},
+				ucode: {
+//					reg: , //从后台获取的数据
+					error: '用户名不合法，格式应为：验证码',
+					success: '正确'
+
+				}
+
+			};
+
+			$('.btn').click(function() {
+				
+				$.each(config, function(i) {
+
+					var cur = $('input[name=' + i + ']');
+					var config = this;
+					var reg = config.reg;
+					var res = reg.test(cur.val());
+					var tip = res ? config.success : config.error;
+
+					if(!res) {
+						alert(tip);
+						return false;
+					}
+				})
+			});
+
+			$('img').click(function() {
+				this.src = 'code/catpcha.php?_=' + new Date()
+			})
+
+			$('input').blur(function() {
+				var config = obj[this.name];
+				console.log(config)
+			})
+		</script>
+	</body>
+
+</html>

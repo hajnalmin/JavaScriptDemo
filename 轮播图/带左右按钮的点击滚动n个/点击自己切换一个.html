@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>多张图片轮播</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        .box{
+            position: relative;
+            width: 790px;
+            height: 100px;
+            margin: 50px auto;
+            border: 1px solid red;
+            overflow: hidden;
+        }
+        .box_list{
+            width: 750px;
+            height: 100px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .list {
+            width: 5000px;
+        }
+        .list li{
+            float: left;
+            text-align: center;
+        }
+        .list li a{
+            width: 150px;
+            height: 80px;
+            font:20px/80px "萝莉体";
+            display: block;
+            margin: 10px 0;
+            color: #FFFFFF;
+        }
+        .list li:nth-child(odd){
+            background: paleturquoise;
+        }
+        .list li:nth-child(even){
+            background: lightpink;
+        }
+        .arrow{
+            width: 20px;
+            height: 40px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: #FFFFFF;
+            text-align: center;
+            line-height: 40px;
+        }
+        #prev{
+            left: 0;
+        }
+        #next{
+            right: 0;
+        }
+        
+    </style>
+</head>
+<body>
+<div class="box">
+   <div class="box_list">
+       <ul class="list">
+           <li><a href="#">1</a></li>
+           <li><a href="#">2</a></li>
+           <li><a href="#">3</a></li>
+           <li><a href="#">4</a></li>
+           <li><a href="#">5</a></li>
+           <li><a href="#">6</a></li>
+           <li><a href="#">7</a></li>
+           <li><a href="#">8</a></li>
+           <li><a href="#">9</a></li>
+           <li><a href="#">10</a></li>
+           <li><a href="#">11</a></li>
+           <li><a href="#">12</a></li>
+           <li><a href="#">13</a></li>
+           <li><a href="#">14</a></li>
+           <li><a href="#">15</a></li>
+       </ul>
+   </div>
+    <a href="javascript:;" class="arrow" id="prev">&lt;</a>
+    <a href="javascript:;" class="arrow" id="next">&gt;</a>
+
+</div>
+
+<script src="jquery-1.7.2.js"></script>
+<script>
+    $(function(){
+        //1.设置默认
+
+        var list = $('.list');
+        var first = list.children(':first').clone(true);
+        var index = 0;
+
+        var length = list.children().length;
+        var width = list.children(':first').width();
+        var count = $('.box_list').width()/width;
+        var next = $('#next');
+        var prev = $('#prev');
+
+        //2.克隆元素放到尾部
+        for(var i = 0;i<count;i++){
+            var newLi = list.children('li').eq(i).clone(true);
+            list.append(newLi);
+        }
+
+        //3.定义核心函数
+        function core(num){
+            //3.2根据索引值计算left,执行动画移动图片
+            list.stop().animate({"margin-left":(-num * width)});
+        }
+
+        //4.定义一个函数用于定时器和右箭头
+        function autoPlay(){
+            index++;
+            if(index>length){
+                //瞬间将位置调整到第一张图也就是0
+                console.log(index);
+                list.css("margin-left",0);
+                //调整到0的位置显示的还是第一张  下一张索引应该是1 也就是第二张图
+                index = 1;
+            }
+            core(index);
+        }
+        function clickPlay(){
+            index+=count;
+            if(index>length){
+                //瞬间将位置调整到第一张图也就是0
+                console.log(index);
+                list.css("margin-left",0);
+                //调整到0的位置显示的还是第一张  下一张索引应该是1 也就是第二张图
+                index = 1;
+            }
+            core(index);
+        }
+        var sid = setInterval(autoPlay,1000);
+        next.click(clickPlay);
+
+        //5.左箭头的设置
+        prev.click(function(){
+            index-=count;
+            if(index<0){
+                //如果索引值于0 瞬间调整到最后一张图的位置，最后一张和第一张是相同的
+                list.css("margin-left",-width);
+                //此时索引值为5
+                index = length-1;
+            }
+            core(index);
+        });
+
+
+        //6.移入移出事件
+        $('.box').hover(function(){
+            clearInterval(sid)
+        },function(){
+            sid = setInterval(autoPlay,1000);
+        });
+
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<canvas id="view" ></canvas><br /><br />
+		显示的文字：<input type="text" value="乐天滚" />填充的文本：<input type="text" value="朴" /><button>提交</button>
+	</body>
+	<script src="js/tween.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+		var view = document.getElementById('view');
+		
+		var ps = view.getContext('2d');
+		
+		var width = 600;
+		
+		var height = 400;
+		
+		view.width = width;
+		
+		view.height = height;
+		
+		/**-
+		 * 1. 绘制文本或图像  
+		 * 2. 获取有效像素点（保存像素点的坐标值）
+		 * 3. 定时器更新坐标
+		 * 4. 根据像素点坐标绘制填充内容（文字、图案）
+		 */
+		
+		var particle = {
+			
+			points:[],
+			
+			running:0,//保存播放状态
+			
+			random:function(num){
+				
+				return parseInt(Math.random()*num)
+				
+			},
+			
+			//绘制文本： 字体样式、对齐方式、颜色、文本、xy轴
+			fillText:function(text,font){
+				
+				ps.font = font || '150px 微软雅黑';
+				
+				ps.textAlign = 'center';
+				
+				ps.fillText(text || '默认文本',width/2,height/2);
+				
+				return this
+				
+			},
+			
+			//获取有效像素点（有指定颜色值  透明度不能过小）
+			getPoints:function(){
+				
+				//获取像素点对象
+				
+				var imgData = ps.getImageData(0,0,width,height);
+				
+				//获取像素点数据
+				
+				var data = imgData.data;
+				
+				//每次查找的像素点 
+				
+				var num = 10;
+				
+				// 外循环遍历垂直高度 
+				
+				for(var y = 1; y<=height;y+=num){
+					
+					//内循环遍历水平宽度 （列数）
+					
+					for(var x = 1; x<=width;x+=num){
+						
+						//根据xy坐标计算第几个像素点
+						
+						var index = ((y-1)*width+x)*4-1;// 第2个点 2*4=8  0123第一点   4567第二个点 所以-1
+						
+						// 获取在像素点数组中的元素    第N个像素点*4  每4个值组成一个像素点
+						
+						var r = data[index-3];
+						
+						var g = data[index-2];
+						
+						var b = data[index-1];
+						
+						var a = data[index];
+						
+						//黑色所有rgb全是0  a有值就能看的到
+						//判断透明度值不为0 就是有效像素点  
+						if(a){
+							
+							//生成随机坐标点
+							
+							var rX = this.random(width);
+							
+							var rY = this.random(height);
+							
+							this.points.push([x,y,rX,rY]);//  xy坐标 
+							
+						}
+						
+						
+					}
+					
+				}
+				
+				
+				return this
+				
+			},
+			
+			//播放功能（开启定时器）
+			play:function(text){
+				
+				var self = this;
+				
+				var stime = 0;//起始时间
+				
+				var etime = 2000;// 终止时间（需要使用的时间）
+				
+				var delay = 20;//定时器间隔时间
+				
+				//获取像素点信息
+				
+				var points = self.points;
+				
+				//已经播放直接return
+				if(this.running) return this
+				
+				this.running = setInterval(function(){
+					
+					//开始时间递增
+					stime+=delay;
+					
+					//如果开始时间大于等于结束时间
+					if(stime>=etime){
+						
+						//终止定时器强制设置开始时间为结束时间
+						clearInterval(self.running);
+						
+						stime = etime;
+						
+						//执行完成动画之后  重置running
+						
+						self.running = 0;
+						
+					}
+					
+					//清场
+					
+					ps.clearRect(0,0,width,height);
+					
+					//遍历像素点坐标
+					
+					for(var i = 0; i<points.length;i++){
+						
+						//获取当前的数据
+						
+						var data = points[i];
+						
+						//获取目标xy坐标及初始随机xy坐标
+						
+						var x = data[0];
+						
+						var y = data[1];
+						
+						var rx = data[2];
+						
+						var ry = data[3];
+						
+						//根据tweenjs计算xy坐标
+						
+						x = Tween.Back.easeInOut(stime,rx,x-rx,etime);
+						
+						y = Tween.Back.easeInOut(stime,ry,y-ry,etime);
+						
+						self.fill(text,x,y);
+						
+					}
+					//计算移动后的像素点坐标值  ，将这个坐标值交给填充方法进行渲染
+					
+				},delay)
+				
+				return this
+				
+			},
+			
+			//根据计算好的xy坐标进行渲染
+			fill:function(text,x,y){
+				
+				ps.font = '10px 微软雅黑';
+				
+				ps.fillText(text || '❤',x,y)
+				
+				
+				
+				return this
+				
+				//开路径
+				
+				ps.beginPath();
+				
+				ps.arc(x,y,4,0,2*Math.PI);
+				
+				ps.fill();
+				
+				
+				return this
+			},
+			
+			init:function(text,text1){
+				
+				//初始化points避免重复添加
+				
+				this.points = [];
+				
+				particle.fillText(text).getPoints().play(text1);
+				
+			}
+			
+			
+			
+		}
+		
+		
+		
+		document.querySelector('button').onclick = function(){
+		
+			var text = document.querySelector('input:nth-of-type(1)').value;
+			
+			var text1 = document.querySelector('input:nth-of-type(2)').value;
+			
+			particle.init(text,text1);
+		
+		}
+		
+		
+		
+	</script>
+</html>

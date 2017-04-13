@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.box{
+			width: 600px;
+			padding: 20px;
+			margin: 50px auto;
+			border: 1px solid #ccc;
+			overflow: hidden;
+		}
+		
+		.box textarea{
+			width: 100%;
+			border: 1px solid #ccc;
+			outline: 0 none;
+			height: 100px;
+			resize: none;
+		}
+		
+		.box button{
+			float: right;
+			width: 100px;
+			font: 16px/40px "微软雅黑";
+			color: #fff;
+			background: skyblue;
+			text-align: center;
+			border-radius: 5px;
+			border:0 none;
+			cursor: pointer;
+			outline: 0 none;
+		}
+		
+		.box button:hover{
+			background: deepskyblue;
+		}
+		
+		.clearfix:after{
+			content: "";
+			display: block;
+			height: 0;
+			overflow: hidden;
+			clear: both;
+		}
+		
+		.list li{
+			overflow: hidden;
+			font: 14px/40px "微软雅黑";
+			color: #333;
+			border-bottom: 1px dashed pink;
+		}
+		
+		.list p{
+			float: left;
+		}
+		.list a{
+			float: right;
+			color: #333;
+			text-decoration: none;
+		}
+		
+		.list a:hover{
+			color: red;
+			text-decoration: underline;
+		}
+	</style>
+	<body>
+		<div class="box">
+			
+			<textarea ></textarea>
+			<div class=" clearfix">
+			<button>发布</button>
+			</div>
+			
+			<ul class="list">
+				<li>
+					<p>标题1</p>
+					<a href="javascript:;">删除</a>
+				</li>
+				<li>
+					<p>标题2</p>
+					<a href="javascript:;">删除</a>
+				</li>
+				<li>
+					<p>标题3</p>
+					<a href="javascript:;">删除</a>
+				</li>
+				<li>
+					<p>标题4</p>
+					<a href="javascript:;">删除</a>
+				</li>
+				<li>
+					<p>标题5</p>
+					<a href="javascript:;">删除</a>
+				</li>
+				<li>
+					<p>标题6</p>
+					<a href="javascript:;">删除</a>
+				</li>
+				<li>
+					<p>标题7</p>
+					<a href="javascript:;">删除</a>
+				</li>
+				<li>
+					<p>标题8</p>
+					<a href="javascript:;">删除</a>
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script src="js/jquery-1.7.2.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		//1.闭包 
+		
+		(function(){
+			
+			//1.获取元素  （重复使用的元素可以在头部先查找）
+			
+			var textarea = $('.box textarea');
+			
+			var list = $('.list');
+			
+			
+			//2.发布事件
+			
+			$('.box button').click(function(){
+				
+				//3.获取文本域的内容
+				
+				var txt = textarea.val();
+				
+				//4. 限制最小最大字符的数量 
+				
+				if(txt.length<2 || txt.length>100){
+					
+					return alert('输入的内容字符数量不得小于2且不能大于100');
+					
+				}
+				
+				//5. 向列表中的头部内部追加发布的内容
+				
+				//5.0 生成标签  
+				
+				var li = $('<li><p>'+txt+'</p><a href="javascript:;">删除</a></li>');
+				
+				//5.1 向列表头部追加内容
+				
+				list.prepend(li);
+				
+				//6. 执行展开动画  要先瞬间 隐藏再展示 。默认是显示状态
+				
+				li.hide().slideDown();
+				
+			})
+			
+			//7. 给list绑定单击事件
+			
+			list.on('click','.list>li>a',function(){
+				
+				//8. 执行收缩动画
+				
+				$(this).parent().slideUp(function(){
+					
+					//9.动画完成执行的回调函数
+					
+					$(this).remove();
+					
+				});
+				
+				
+				
+			})
+			
+			
+			
+		})();
+		
+		
+		
+		
+		
+		
+		
+	</script>
+</html>

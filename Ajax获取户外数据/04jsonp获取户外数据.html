@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		.box{
+			width: 1200px;
+			margin: 50px auto;
+		}
+		
+		.list{
+			width: 1215px;
+			overflow: hidden;
+		}
+		
+		.list li{
+			float: left;
+			width: 385px;
+			background: #eff2f6;
+			margin: 0 20px 25px 0;
+		}
+		
+		.list li .pic img{
+			width: 100%;
+			transition: .2s;
+		}
+		.list li:hover .pic img{
+			margin-top: -20px;
+		}
+		
+		.pic{
+			position: relative;
+			height: 215px;
+			overflow: hidden;
+		}
+		
+		.pic div{
+			font: 14px/20px "微软雅黑";
+			color: #fff;
+			position: absolute;
+			bottom: 20px;
+			padding: 0 25px;
+			width: 100%;
+			box-sizing: border-box;
+		}
+		
+		.pic div span:last-child{
+			float: right;
+			font-size: 24px;
+		}
+		
+		.pic div span:last-child b{
+			font-size: 14px;
+		}
+		
+		.title{
+			font: 16px/24px "微软雅黑";
+			color: #333333;
+			padding: 5px 25px 10px;
+			height: 48px;
+		}
+		
+		
+		.more{
+			width: 200px;
+			display: block;
+			margin: 10px auto;
+			background: deeppink;
+			text-align: center;
+			font: 14px/40px "微软雅黑";
+			color: #fff;
+			text-decoration: none;
+		}
+	</style>
+	<body>
+		<div class="box">
+			
+			<ul class="list">
+				
+				<!--<li>
+					
+					<div class="pic">
+						
+						<img src="1.jpg"/>
+						
+						<div>
+							<span>02/18 北京出发</span>
+							<span><b>¥</b>70</span>
+						</div>
+						
+					</div>
+					
+					<h2 class="title">
+						冬季必走经典路线 白河峡谷 云梦仙境看冰瀑（1日行程）
+					</h2>
+					
+				</li>-->
+				
+			</ul>
+			
+			<a href="javascript:;" class="more">加载更多</a>
+			
+		</div>
+	</body>
+	<script type="text/javascript">
+	
+		var list = document.getElementsByClassName('list')[0];
+		
+	
+		//0.定义一个函数用于jsonp调用它
+		
+		function abcd(data){
+			
+			var html = '';
+			
+			//1. 遍历data.goodlist
+			
+			var goods = data.goodlist || [];
+			
+			for(var i = 0; i<goods.length; i++){
+				//2.遍历第一层
+				//console.log(i+goods[i])
+				
+				//3.遍历 第二层
+				
+				for(var j = 0; j<goods[i].length;j++){
+					
+					//4.将当前数据拼成一个li  
+					
+					var tmp = goods[i][j];
+					
+					//5. 如果tmp是null 为假 终止循环
+					
+					if(!tmp)break;
+					
+					var time = tmp.goods_spec;
+					
+					//console.log(time)
+					
+					html+='<li><div class="pic"><img src="'+tmp.default_image+'"/>';
+					
+					html+='<div><span>'+time.m+'/'+time.d+' '+tmp.start_place+'出发</span><span><b>¥</b>'+tmp.price+'</span>';
+					
+					html+='</div></div><h2 class="title">'+tmp.title+'</h2></li>';
+					
+					
+					//console.log(tmp)
+					
+				}
+				
+			}
+		
+			list.innerHTML += html;
+			
+		}
+		
+		//1.定义一个函数用于数据加载
+		
+		function getData(num){
+			
+			num = num || 1;
+			
+			//3. 创建标签
+			
+			var js = document.createElement('script');
+			
+			//4. 设置src地址
+			
+			js.src = 'http://cct296.com/api/goods.php?datatype=jsonp&page='+num+'&callback=abcd&__='+new Date().getTime();
+			
+			//5. 插入页面
+			
+			document.body.appendChild(js);
+			
+			
+		}
+		
+		//2.加载默认数据
+		
+		getData();
+		
+		//3.点击加载更多   点一次页码加1 默认值是1
+		
+		var page = 1;
+		
+		document.getElementsByClassName('more')[0].onclick = function(){
+		
+			//4.页码加1
+			
+			page++;
+			
+			//5. 页码不能大于7 
+			
+			if(page>7) return alert('对不起已经是最后一页！');
+			
+			getData(page);
+			//console.log(page)
+		
+		}
+		
+		
+	</script>
+	
+</html>

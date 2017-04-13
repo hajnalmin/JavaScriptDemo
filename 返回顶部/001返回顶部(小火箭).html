@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        img{
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            display: none;
+            cursor: pointer;
+        }
+        body{
+            height: 2000px;
+        }
+    </style>
+</head>
+<body>
+<img src="top.gif" alt=""/>
+<script src="jquery-1.7.2.js"></script>
+<script>
+    $(window).scroll(function(){
+        var sTop = $(this).scrollTop();
+        if(sTop>150){//或者大于屏幕的高度$(window).height
+            $('img').show();
+        }else{
+            $('img').hide();
+        }
+
+    });
+    //点击返回顶部
+    $('img').click(function(){
+        //为了兼容同时选中html与body
+        //window.scrollTo(0,0) 原生设置滚动条位置 x,y
+        $('body,html').stop().animate({scrollTop:0},2000)
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>三级联动获取年月日</title>
+	</head>
+
+	<body>
+		<select id="year" onchange="initDay()">
+			<option>请选择年份</option>
+		</select>
+		<select id="month" onchange="initDay()">
+			<option>请选择月份</option>
+		</select>
+		<select id="day">
+			<option>请选择日</option>
+		</select>
+
+	</body>
+	<script>
+		//初始化年份
+		var year = new Date().getFullYear();
+		
+		for(var i=year;i>=1990;i--){
+			/*console.log(year+1-i);//从1-28
+			console.log(new Option(i,i));//从1-28*/
+			//注意:new Option(文本,值)
+			document.getElementById('year').options[year+1-i] = new Option(i,i);
+		}
+		
+		
+		//初始化月份
+		for(var i = 1;i<=12;i++){
+			document.getElementById('month').options[i] = new Option(i,i);
+		}
+		
+		//初始化日期
+		function initDay(){
+			//添加之前先初始化
+			document.getElementById('day').length = 1;
+			var year = document.getElementById('year').value;
+			var month = document.getElementById('month').value;
+			//判断是否为空
+			if(year == "" || month == ""){
+				return;
+			}else{
+				var arr = new Array(31,28,31,30,31,30,31,31,30,31,30,31);
+				//判断是否为闰年
+				if((year%4 == 0&&year%100==0)||year%400==0){
+					arr[1]++;
+				}
+				for(var i = 1;i<=arr[month-1];i++){
+					document.getElementById('day').options[i] = new Option(i,i);
+				}
+			}
+		}
+		
+		
+		
+	</script>
+</html>

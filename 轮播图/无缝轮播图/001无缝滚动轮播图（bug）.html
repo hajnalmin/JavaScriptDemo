@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>无缝滚动轮播图</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .banner{
+            width: 600px;
+            height: 350px;
+            margin: 50px auto;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #000000;
+        }
+        .list{
+            width: 5000px;
+        }
+        .list li{
+            float: left;
+        }
+        .buttons{
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+            display: none;
+        }
+        /*留着这buttons span*/
+        
+        .arrow{
+            width: 30px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.3);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ffffff;
+            font:18px/60px "微软雅黑";
+            text-align: center;
+            cursor: pointer;
+        }
+        .arrow:hover{
+            background: rgba(0, 0, 0, 0.7);
+        }
+        #prev{
+            left: 0;
+        }
+        #next{
+            right: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div class="banner">
+    <ul class="list">
+        <li class="active"><a href="#"><img src="images/banner/1.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/banner/2.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/banner/3.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/banner/4.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/banner/5.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/banner/6.jpg" alt=""/></a></li>
+    </ul>
+    <ul class="buttons">
+        <li class="active">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+    <span class="arrow" id="prev">&lt;</span>
+    <span class="arrow" id="next">&gt;</span>
+</div>
+
+<script src="js/jquery-1.7.2.min.js"></script>
+<script>
+    var list = $('.list');
+    var liFirst = $('.list li:first');
+    var liWidth =liFirst.width();
+
+    //1.复制第一个元素放到尾部
+    list.append(liFirst.clone(true));
+
+    //2.定义一个变量保存移动的速度 （递增递减值）
+    var speed = -3;
+
+    //3.定义一个变量要保存移动的距离
+    var left = 0;
+    //4.开启一个定时器，并且保存在变量中
+    function goAuto(){
+        left+=speed;
+        list.css('margin-left',left);
+        //判断如果是最后一张则从头开始
+        if(left<=(list.children().length-1)*(-liWidth)){
+            left = 0;
+        }else if(left>=0){
+            left = (list.children().length-1)*(-liWidth);
+        }
+    }
+    var timer = setInterval(goAuto,100);
+
+    //5.左右点击改变方向
+    $('#prev').click(function(){
+        speed = -Math.abs(speed);
+    });
+    $('#next').click(function(){
+        speed = Math.abs(speed);
+    });
+
+
+    //6.鼠标划上去停止滚动
+    $('.banner').hover(function(){
+        clearInterval(timer);
+    },function(){
+        timer = setInterval(goAuto,100);
+    })
+
+
+</script>
+</body>
+</html>

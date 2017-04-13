@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>导航菜单</title>
+		<style type="text/css">
+			*{
+					margin: 0;
+					padding: 0;
+					text-decoration: none;
+					list-style: none;
+				}
+				.nav{
+					width: 1000px;
+					margin: 50px auto;
+					font: 14px/40px "微软雅黑";
+					text-align: center;
+				}
+				.nav li{
+					width: 100px;
+					float: left;
+				}
+				.nav a{
+					display: block;
+					background: pink;
+					color: #fff;
+				}
+				.nav a:hover{
+					background: paleturquoise;
+				}
+				/*使用伪类*/
+				
+				.nav li:after{
+					content: "";
+					display: block;
+					width: 0;
+					border-bottom:2px solid orangered ;
+					margin: 0 auto;
+					transition: 0.5s;
+					
+				}
+				.nav li:hover:after{
+					width: 100%;
+				}
+				
+		</style>
+	</head>
+
+	<body>
+		<ul class="nav">
+			<li><a href="#">导航1</a></li>
+			<li><a href="#">导航2</a></li>
+			<li><a href="#">导航3</a></li>
+			<li><a href="#">导航4</a></li>
+			<li><a href="#">导航5</a></li>
+			<li><a href="#">导航6</a></li>
+			<li><a href="#">导航7</a></li>
+			<li><a href="#">导航8</a></li>
+		</ul>
+
+	</body>
+
+</html>

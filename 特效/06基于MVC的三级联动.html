@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>基于MVC的三级联动</title>
+</head>
+<body>
+
+<select>
+    <option value="">品牌</option>
+    <option value="">宝马</option>
+    <option value="">奔驰</option>
+</select>
+<select>
+
+    <option value="">车型</option>
+    <option value="">520LI</option>
+</select>
+<select>
+
+    <option value="">车款</option>
+    <option value="">2016 1.8T</option>
+</select>
+<!--
+    什么是MVC？
+        model 模型  数据模型  数据
+		view  视图   html代码  能看见的  以什么方式显示
+		controller 控制器    逻辑部分 、应该做什么、准备做什么、什么事件触发 什么功能。。。。
+
+		控制器-》发命令给  模型，让模型返回数据-》控制器得到数据 -》控制器将数据交给视图显示
+
+
+
+      1. 更新车型  根据品牌ID
+      2. 更新车款  根据车型ID
+      3. 更新数据  根据上一级ID
+
+        根据ID可以获取对应的数据
+        遍历数据生成html代码
+        根据HTML更新内容
+        设置默认被选中的元素
+
+
+-->
+</body>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/make_json.js"></script>
+<script src="js/model_json.js"></script>
+<script src="js/car_json.js"></script>
+<script>
+
+
+    /*步骤
+     1.定义三个对象，分别是控制器，模型，视图
+     2.控制器对象中ctrl
+        （1）初始化方法
+        （2）创建品牌列表
+        （3）创建车型列表
+        （4）创建车款列表
+        （5）品牌切换事件
+        （6）车型切换事件
+
+    3.模型对象中model
+        （1）获取品牌数据
+        （2）获取车型数据
+        （3）获取车款数据
+
+    4.视图对象中view中
+        （1）方法create_option:根据数据及选择器 创建html代码并更新到对应的元素上
+        （2）根据品牌数据显示品牌列表
+        （3）根据车型数据显示车型列表
+        （4）根据车款数据显示车款列表
+
+
+
+     */
+
+    (function($){
+        //1.
+        var ctrl = {
+            init:function(){
+                this.create_brand();
+                this.brand_change();
+                this.model_change();
+
+            },
+
+            //创建品牌列表
+            create_brand:function(){
+                var data = model.get_brand();
+                view.show_brand(data);
+
+            },
+            create_model:function(){
+                var id = $('select:first').val();
+                var data = model.get_model(id);
+                view.show_model(data);
+            },
+            create_car:function(){
+                var id = $('select:eq(1)').val();
+                var data = model.get_car(id);
+                view.show_car(data);
+            },
+
+            //品牌切换事件
+            brand_change:function(){
+                var self = this;
+                $('select:first').change(function(){
+                    self.create_model();
+                })
+            },
+            //车型切换事件
+            model_change:function(){
+                var self = this;
+                $('select:eq(1)').change(function(){
+                    self.create_car();
+                })
+            }
+
+
+        };
+
+
+        //1.
+        var model = {
+            //获取品牌数据
+            get_brand:function(){
+                return make_json;
+            },
+            //获取车型数据
+            get_model:function(id){
+                return model_json[id];
+            },
+            //获取车款数据
+            get_car:function(id){
+                return car_json[id];
+            }
+        };
+
+
+
+        //1.
+        var view = {
+            // 根据数据及选择器 创建html代码并更新到对应的元素上
+            create_options:function(data,selector){
+                var html = "";
+                $.each(data,function(){
+                    html+='<option value="'+this.id+'">'+this.name+'</option>';
+                });
+                $(selector).html(html);
+            },
+
+            show_brand:function(data){
+                this.create_options(data,'select:first');
+            },
+            show_model:function(data){
+                this.create_options(data,'select:eq(1)');
+            },
+            show_car:function(data){
+                this.create_options(data,'select:last');
+            }
+
+        };
+
+        ctrl.init();
+
+    })(jQuery);
+
+
+</script>
+
+
+</html>

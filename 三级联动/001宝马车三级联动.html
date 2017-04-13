@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>三级联动</title>
+</head>
+<body>
+<select>
+    <option value="">品牌</option>
+    <option value="">宝马</option>
+    <option value="">奔驰</option>
+</select>
+<select>
+
+    <option value="">车型</option>
+    <option value="">520LI</option>
+</select>
+<select>
+
+    <option value="">车款</option>
+    <option value="">2016 1.8T</option>
+</select>
+
+
+<!--引入json文件 -->
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/make_json.js"></script>
+<script src="js/model_json.js"></script>
+<script src="js/car_json.js"></script>
+<script>
+    /*
+     * 思路：
+     *   1.定义三个对象  分别是控制器、模型、视图
+     *   2.在视图中先定义创建HTMl元素的方法，然后在写三个show函数
+     *      （1）createOption
+     *       (2) 三个show方法展示品牌，车型，车款
+     *   3.在模型中先获取一些数据并返回
+     *      （1）三个方法
+     *   4.在控制器中
+     *   （1）初始化方法
+     *   （2）创建品牌，车型，车款列表
+     *   （3）品牌改变方法，车盖改变方法
+     *
+     * */
+
+
+    $(function () {
+
+        //处理一些数据
+        var model = {
+            //获取一些品牌数据
+            getBrand: function () {
+                return make_json;
+            },
+            //获取车型数据
+            getCarModel: function (id) {
+                return model_json[id];
+            },
+            //获取一些车款样式数据
+            getCarStyle: function (id) {
+                return car_json[id];
+            }
+        };
+        //显示数据
+
+        var view = {
+            //根据数据及选择器，创建html代码并更新到对应的元素上
+            create_option:function(data,selector){
+                //遍历生成html代码
+                var html = "";
+                $.each(data,function(){
+                    html+="<option value='"+this.id+"'>"+this.name+"</option>";
+                });
+                $(selector).html(html);
+            },
+            //根据品牌数据显示品牌列表
+            show_Brand:function(data){
+                this.create_option(data,"select:nth-child(1)");
+
+            },
+            //根据车型数据显示车型列表
+            show_carModel:function(data){
+                this.create_option(data,"select:nth-child(2)");
+            },
+            //根据车款数据显示车款列表
+            show_carStyle:function(data){
+                this.create_option(data,"select:nth-child(3)");
+            }
+
+        };
+        var ctrl = {
+            init: function () {
+                console.log("初始化");
+                this.createBrand();
+                this.brand_change();
+                this.model_change();
+
+            },
+            //创建品牌列表
+            createBrand:function(){
+                //调用模型的方法获取数据
+                var data = model.getBrand();
+
+//                console.log(data);
+                //将数据交给视图
+                view.show_Brand(data);
+            },
+            //创建车型列表
+            createModel:function(){
+                //获取ID
+                var id = $("select:nth-child(1)").val();
+                //调用模型方法获取数据
+                var data = model.getCarModel(id);
+
+                console.log(data);
+                //将数据交给视图
+                view.show_carModel(data);
+                //创建车款
+                this.createCarStyle();
+
+            },
+
+            //创建车款列表
+            createCarStyle:function(){
+                //获取ID
+                var id = $('select:nth-child(2)').val();
+                //调用模型方法获取数据
+                var data = model.getCarStyle(id);
+                //将数据交给视图
+                view.show_carStyle(data);
+            },
+
+            // 品牌切换事件
+            brand_change:function(){
+                var self = this;
+                $('select:nth-child(1)').change(function(){
+                    self.createModel();
+                })
+            },
+            // 车型切换事件
+            model_change:function(){
+                var self = this;
+                $('select:nth-child(2)').change(function(){
+                    self.createCarStyle();
+                })
+            }
+        };
+        //0.执行初始化方法
+        ctrl.init();
+
+    })
+</script>
+</body>
+</html>

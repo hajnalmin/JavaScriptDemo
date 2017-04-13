@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		img{
+			display: block;
+		}
+		
+		.banner{
+			width: 600px;
+			height: 350px;
+			margin: 50px auto;
+			position: relative;
+			border: 1px solid #000;
+			overflow: hidden;
+		}
+		
+		.list{
+			width: 5000px;
+		}
+		
+		.list li{
+			float: left;
+		}
+		
+		
+		.btn{
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			bottom: 20px;
+		}
+		
+		.btn li{
+			float: left;
+			width: 30px;
+			font: 14px/30px "微软雅黑";
+			text-align: center;
+			border-radius: 50%;
+			background: deeppink;
+			color: #fff;
+			cursor: pointer;
+			margin: 0 5px;
+		}
+		
+		.banner>a{
+			position: absolute;
+			width: 30px;
+			font: 24px/60px "新宋体";
+			text-align: center;
+			text-decoration: none;
+			background: rgba(0,0,0,0.3);
+			top: 50%;
+			transform: translateY(-50%);
+			color: #fff;
+		}
+		
+		.banner>a:last-child{
+			right: 0;
+		}
+		/**
+		 * of-type限制类型
+		 * li:first-child 如果第一个子元素不是li是选择不到的
+		 * 
+		 * 
+		 */
+		.banner>a:nth-of-type(1){
+			left: 0;
+		}
+		
+		.banner>a:hover{
+			background: rgba(0,0,0,0.5);
+		}
+		
+		.btn .active{
+			background: springgreen;
+		}
+		
+	</style>
+	<body>
+		<div class="banner">
+			<!--			ul.list>li*6>a>img[src=images/banner/$.jpg]
+-->
+			<ul class="list">
+				<li class="on"><a href=""><img src="images/banner/1.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/2.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/3.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/4.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/5.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/6.jpg" alt="" /></a></li>
+			</ul>
+			
+			<ul class="btn">
+				<li class="active">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</ul>
+			
+			<a href="javascript:;">&lt;</a>
+			<a href="javascript:;">&gt;</a>
+			
+		</div>
+	</body>
+	<script src="js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+		//1. 初始化 获取元素
+		
+		var list = $('.list');
+		
+		var first = list.children(':first').clone(true);
+		
+		var index = 0;
+		
+		var length = list.children().length;
+		
+		var width = list.children(':first').width();
+		
+		var btns = $('.btn li');
+		
+		//2. 克隆第一个扔到尾部
+		
+		list.append(first);
+		
+		//3.定义核心函数
+		
+		function core(num){
+			
+			//4.根据索引值 找到对应的按钮添加类名其它小伙伴 要删除类名
+			// 如果索引值大于等于按钮长度 找不到这个按钮 强制使用索引值0 
+			btns.eq(num>=btns.length ? 0 : num).addClass('active').siblings().removeClass('active');
+			
+			//5.根据索引值计算left值
+			
+			var left = -num * width;
+			
+			//6. 执行动画方法
+			
+			list.stop().animate({'margin-left':left});
+			
+		}
+		
+		//4. 定义一个函数用于定时器与 右箭头
+		
+		var play = function(){
+			
+			//1.索引值+1
+			
+			index++;
+			
+			//2. 如果索引值大于6 瞬间将显示的位置调整到0 
+			
+			if(index>length){
+				
+				//3.瞬间将位置调整到第一图也就是0
+				
+				list.css('margin-left',0);
+				
+				//4. 调整到0的位置显示的还是第一张  下一张索引应该是1 也就是第二张图
+				
+				index = 1;
+				
+			}
+			core(index)
+			
+		}
+		
+		//5.开启定时器
+		
+		var sid = setInterval(play,1000);
+		
+		
+		//6.右箭头 
+		
+		$('.banner>a:last').click(play);
+		
+		//7.左箭头
+		$('.banner>a:first').click(function(){
+			
+			//8.索引值--
+			
+			index--;
+			
+			if(index<0){
+				
+				//9.如果索引值于0 瞬间调整到最后一张图的位置，最后一张和第一张是相同的
+				
+				list.css('margin-left',-length*width);
+				
+				//10.索引值应该为 5 
+				
+				index = length-1;
+				
+			}
+			
+			core(index)
+			
+		});
+		
+		
+		//11.移入移出事件
+		
+		$('.banner').hover(function(){
+			
+			clearInterval(sid)
+			
+		},function(){
+			
+			sid = setInterval(play,1000);
+			
+		})
+		
+		//12.按钮切换 
+		
+		btns.click(function(){
+			
+			//13.获取当前元素值
+			
+			core(index = $(this).index())
+			
+		})
+		
+		
+		
+		
+		
+		
+	
+	</script>
+</html>

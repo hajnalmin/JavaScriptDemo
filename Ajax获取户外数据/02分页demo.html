@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>分页</title>
+    <style type="text/css">
+        .grid {
+            width: 400px;
+        }
+
+        .table {
+            width: 100%;
+            text-align: center;
+            border: outset #efefef;
+            border-width: 1px 0px 0px 1px;
+        }
+        .table th, td {
+            line-height: 30px;
+            border: solid #efefef;
+            border-width: 0px 1px 1px 0px;
+        }
+        .table tr {
+            width: 100%;
+            margin: 0 auto;
+            border: none;
+            overflow: hidden;
+            color: #2981e4;
+            font: normal 12px/100% "微软雅黑", "Lucida Grande", "Lucida Sans", Helvetica, Arial, Sans;
+        }
+
+        .no-content {
+            text-align: center;
+            line-height: 36px;
+            color: red;
+            font: normal 16px/100% "微软雅黑", "Lucida Grande", "Lucida Sans", Helvetica, Arial, Sans;
+        }
+
+        .pager {
+            padding-top:20px;
+            text-align: right;
+            line-height: 36px;
+            color: blue;
+            font: normal 12px/100% "微软雅黑", "Lucida Grande", "Lucida Sans", Helvetica, Arial, Sans;
+        }
+
+        .button, .button:visited {
+            background-color: #EFEFEF;
+            border: 1px solid #d5d5d5;
+            background: #fff;
+            padding: 2px 6px;
+            margin: 2px;
+            text-decoration: none;
+            cursor: pointer
+        }
+
+        .button:hover {
+            background-color: #2575cf;
+            color: #fff;
+        }
+        .button:active {
+            top: 1px;
+        }
+
+        .no-page {
+            background-color: #EFEFEF;
+            cursor: default;
+        }
+
+        .pager input[type='text'] {
+            width: 20px;
+            color: #333;
+            padding: 4px 5px;
+            border: 1px solid #e0ecff;
+            border-radius: 2px;
+            -o-border-radius: 2px;
+            -moz-border-radius: 2px;
+            -wekit-border-radius: 2px;
+            box-shadow: 0 0 0 2px rgba(255,255, 255, 0.2);
+            -o-box-shadow: 0 0 0 2px rgba(255,255, 255, 0.2);
+            -webkit-box-shadow: 0 0 0 2px rgba(255,255, 255, 0.2);
+            -moz-box-shadow: 0 0 0 2px rgba(255,255, 255, 0.2);
+            behavior: url(/PIE.htc);
+        }
+        .pager input[type='text']:focus, .table input[type='text']:hover {
+            border: 1px solid #3aa2d0;
+            outline: none;
+        }
+
+    </style>
+</head>
+<body>
+<div class="grid">
+    <div id="content">
+
+    </div>
+    <div id="pager">
+
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var jsonData = [];
+
+    //生成静态数据
+    function getJsonData(size) {
+        var datas = [];
+        for (var idx = 0; idx < size; idx++) {
+            datas.push({
+                account : "Account_" + idx,
+                userName : "用户_" + idx,
+                gender : (idx % 2 == 1 ? "男" : "女 "),
+                salary : parseInt(Math.random(idx % 50) * 10000) + 5000
+            });
+        }
+        return datas;
+    }
+
+    //获取当前页数据
+    function query(cur, size) {
+        var begin = (cur - 1) * size;
+        var end = cur * size;
+        return jsonData.slice(begin, end);
+    }
+
+
+    window.onload = function() {
+        //获取JSON数据
+        jsonData = getJsonData(555);
+        //加载数据
+        pageTo(10, 1);
+    };
+
+    //加载表格
+    function pageTo(pageSize, curPage) {
+        var dataSize = jsonData.length;
+        if (dataSize == 0) {
+            content.innerHTML = "<span class='no-content'>没有查询到任何数据！</span>";
+            return;
+        }
+        var totalPage = Math.ceil(dataSize / pageSize);
+        //table
+        var datas = query(curPage, pageSize);
+        var html = "<h3>员工信息表</h3><table class='table'>";
+        for (var index = 0; index < datas.length; index++) {
+            var data = datas[index];
+            html = html + "<tr>";
+            html = html + "<td>" + (data.account || '') + "</td>";
+            html = html + "<td>" + (data.userName || '') + "</td>";
+            html = html + "<td>" + (data.gender || '') + "</td>";
+            html = html + "<td>" + (data.salary || '') + "</td>";
+            html = html + "</tr>";
+        }
+        html = html + "</table>";
+        content.innerHTML = html;
+        //pager
+        var phtml = "<div class='pager'>";
+        if (curPage == 1) {
+            phtml = phtml + "<a href='#' class='button no-page'>上一页</a>";
+        } else {
+            phtml = phtml + "<a href='#' class='button' onclick='pageTo(" + pageSize + ", " + (curPage - 1) + ");'>上一页</a>";
+        }
+        phtml = phtml + "<input type='text' value='" + curPage + "' onkeypress='goto(this, " + pageSize+ ");'>";
+        if (curPage == totalPage) {
+            phtml = phtml + "<a href='#' class='button no-page'>下一页</a>";
+        } else {
+            phtml = phtml + "<a href='#' class='button' onclick='pageTo(" + pageSize + ", " + (curPage + 1) + ");'>下一页</a>";
+        }
+        phtml = phtml + "&nbsp;共" + totalPage + "页," + dataSize + "条记录</div>";
+        pager.innerHTML = phtml;
+    }
+
+    //回车跳转，注意控制输入数字：此处未处理
+    function goto(obj, pageSize){
+        if(event.keyCode==13){
+            pageTo(pageSize, parseInt(obj.value));
+        }
+    }
+
+</script>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>一张一合的圆</title>
+    <style>
+        .box{
+            margin: 100px;
+            transform-style: preserve-3d;
+        }
+        .box>div{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            border-radius: 50px;
+            text-align: center;
+            line-height: 100px;
+        }
+        .box .d1{
+            background: palevioletred;
+         }
+       
+        .d2{
+            background: palegreen;
+            top: 100px;
+            animation: circles 1s linear infinite;
+            transform-origin: center 0px;
+        }
+        @keyframes circles {
+            0%{
+                transform: rotateX(0deg);
+            }
+            50%{
+                transform: rotateX(180deg);
+            }
+            100%{
+                transform: rotateX(0deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <div class="d1">
+        哈哈
+    </div>
+    <div class="d2">
+        哈哈
+    </div>
+</div>
+
+
+</body>
+</html>

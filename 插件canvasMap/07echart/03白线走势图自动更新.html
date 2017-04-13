@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		.data {
+			width: 600px;
+			height: 400px;
+			margin: 0 auto;
+		}
+	</style>
+
+	<body>
+		<div class="data"></div>
+	</body>
+	<script src="js/echarts.common.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var chart = echarts.init(document.querySelector('.data'));
+
+		function randomData() {
+			now = new Date(+now + oneDay);
+			value = value + Math.random() * 21 - 10;
+			return {
+				name: now.toString(),
+				value: [
+					[now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+					Math.round(value)
+				]
+			}
+		}
+
+		var data = [];
+		var now = +new Date(1997, 9, 3);
+		var oneDay = 24 * 3600 * 1000;
+		var value = Math.random() * 1000;
+		for(var i = 0; i < 1000; i++) {
+			data.push(randomData());
+		}
+
+		option = {
+			title: {
+				text: '动态数据 + 时间坐标轴'
+			},
+			tooltip: {
+				trigger: 'axis',
+				formatter: function(params) {
+					params = params[0];
+					var date = new Date(params.name);
+					return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+				},
+				axisPointer: {
+					animation: false
+				}
+			},
+			xAxis: {
+				type: 'time',
+				splitLine: {
+					show: false
+				}
+			},
+			yAxis: {
+				type: 'value',
+				boundaryGap: [0, '100%'],
+				splitLine: {
+					show: false
+				}
+			},
+			series: [{
+				name: '模拟数据',
+				type: 'line',
+				showSymbol: false,
+				hoverAnimation: false,
+				data: data
+			}]
+		};
+
+		setInterval(function() {
+			
+			//循环删除5条头部数据 再插入5条数据到尾部  实现数据的更新
+			for(var i = 0; i < 5; i++) {
+				
+				data.shift();
+				data.push(randomData());
+			}
+			
+			//配置统计图数据
+
+			chart.setOption({
+				series: [{
+					data: data
+				}]
+			});
+		}, 200);
+		
+		//!!!!所有统计图每次都要先进行基础配置！ 百度官方文档示例很多时间没写这句！！！
+		
+		chart.setOption(option);
+
+		//	console.log(chart)
+	</script>
+
+</html>

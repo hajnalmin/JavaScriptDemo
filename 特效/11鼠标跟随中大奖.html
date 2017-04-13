@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.box{
+			width: 500px;
+			font: 30px/100px "微软雅黑";
+			text-align: center;
+			background: pink;
+			color: #fff;
+			position: absolute;
+		}
+	</style>
+	<body>
+		<div class="box">五百万大奖，点到就给你！</div>
+	</body>
+	<script src="js/jquery-1.7.2.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+		var box = $('.box');
+		
+		//1.给窗口添加鼠标移动事件
+		
+		$(window).mousemove(function(e){
+			
+			//2. 通过event事件对象获取当前鼠标的位置  添加偏移量防止点到
+			
+			var x = e.clientX+10;
+			
+			var y = e.clientY+10;
+			
+			//3. 根据鼠标的位置设置盒子的位置
+			
+			box.css({left:x,top:y})
+			
+		})
+		
+		
+		//4.添加单击事件
+		
+		box.click(function(){
+			
+			alert('恭喜您中了五百万！');
+			
+		})
+		
+	</script>
+</html>

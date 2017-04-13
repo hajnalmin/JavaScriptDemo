@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>三级联动</title>
+</head>
+<body>
+
+<select id="selProvince">
+    <option value="0">--请选择省份--</option>
+</select>
+<select id="selCity">
+    <option value="0">--请选择城市--</option>
+    <option>aaaa</option>
+    <option>aaaa</option>
+</select>
+<select id="selDistrict">
+    <option value="0">--请选择区/县--</option>
+</select>
+<input type="button" id="btnOK" value="确定"/>
+
+
+<script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+
+
+<!--读取数据库，以json的格式输出，然后复制json数据，创建js文件-->
+<script src="json/CityJson.js" type="text/javascript"></script>
+<script src="json/proJson.js" type="text/javascript"></script>
+<script src="json/districtJson.js" type="text/javascript"></script>
+
+<!--或者直接引入下边文件-->
+<!--<script src="json/proCityData.js"></script>-->
+
+
+<script type="text/javascript">
+    $(function () {
+
+        var selProvince = $("#selProvince");
+        var selCity = $("#selCity");
+        var selDistrict = $("#selDistrict");
+
+        $.each(province, function (k, p) {
+            //k=key,p = this
+            var option = "<option value='" + this.ProID + "'>" + this.ProName + "</option>";
+            selProvince.append(option);
+        });
+
+
+        selProvince.change(function () {
+
+            var selValue = $(this).val();
+
+//            $("#selCity option:gt(0)").remove();
+            selCity.children('option').slice(1).remove();
+
+            $.each(city, function (k, p) {
+                if (this.ProID == selValue) {
+                    var option = "<option value='" + this.CityID + "'>" + this.CityName + "</option>";
+                    selCity.append(option);
+                }
+            });
+
+        });
+
+        selCity.change(function () {
+            var selValue = $(this).val();
+
+//            $("#selDistrict option:gt(0)").remove();
+            selDistrict.children('option').slice(1).remove();
+
+            $.each(District, function (k, p) {
+                if (this.CityID == selValue) {
+                    var option = "<option value='" + this.Id + "'>" + this.DisName + "</option>";
+                    selDistrict.append(option);
+                }
+            });
+        });
+
+
+
+    });
+</script>
+
+
+</body>
+</html>

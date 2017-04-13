@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>三级联动</title>
+    <style>
+
+    </style>
+</head>
+<body>
+
+<select >
+    <option value="">品牌</option>
+    <option value="">宝马</option>
+    <option value="">奔驰</option>
+</select>
+<select  >
+
+    <option value="">车型</option>
+    <option value="">520LI</option>
+</select>
+<select  >
+
+    <option value="">车款</option>
+    <option value="">2016 1.8T</option>
+</select>
+
+
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/make_json.js"></script>
+<script src="js/model_json.js"></script>
+<script src="js/car_json.js"></script>
+<script>
+
+    //1.获取元素
+    var select = $('select');
+    var make = select.eq(0);//品牌
+    var model= select.eq(1);//车型
+    var car = select.eq(2);//车款
+
+    //2.遍历生成品牌列表
+    var html = "";
+    $.each(make_json,function(i){
+        //将品牌信息拼接成HTML
+        html +='<option value="'+this.id+'">'+this.name+'</option>';
+
+    });
+    make.children(":not(:first)").remove();
+    make.append(html);
+
+    //3.添加品牌change事件
+    make.change(function(){
+        //3.1获取当前品牌的ID
+        var id = $(this).val();
+        //3.2. 根据品牌ID获取当前品牌下的车型数据,如果不存在则为空
+        var modelData = model_json[id] || [] ;
+        //3.3.遍历生成车型列表
+        var html = "";
+        $.each(modelData,function(i){
+            //将车型信息拼接成HTML
+            html +='<option value="'+this.id+'">'+this.name+'</option>';
+
+        });
+        model.children(":not(:first)").remove();
+        model.append(html);
+
+        //3.4添加车型change事件
+        model.change(function(){
+            //获取当前车型的id
+            var id = $(this).val();
+            //根据ID生成车款的数据
+            var carData = car_json[id] || [];
+
+            //遍历生成车款列表
+            var html = "";
+            $.each(carData,function(){
+                //将车型信息拼接成HTML
+                html +='<option value="'+this.id+'">'+this.name+'</option>';
+            });
+            car.children(":not(:first)").remove();
+            car.append(html);
+
+        })
+
+
+
+    })
+
+
+</script>
+</body>
+</html>

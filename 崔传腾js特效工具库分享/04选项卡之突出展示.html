@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		.box{
+			width: 630px;
+			padding: 10px 0 0 10px;
+			background: #000;
+			overflow: hidden;
+			margin: 50px auto;
+		}
+		
+		.box img{
+			width: 200px;
+			display: block;
+			border-radius: 5px;				
+		}
+		
+		.box li{
+			float: left;
+			margin: 0 10px 10px 0;
+		}
+		
+	</style>
+	<body>
+		<ul class="box">
+			<li><a href=""><img src="images/logo/1.png" alt="" /></a></li>
+			<li><a href=""><img src="images/logo/2.png" alt="" /></a></li>
+			<li><a href=""><img src="images/logo/3.png" alt="" /></a></li>
+			<li><a href=""><img src="images/logo/4.png" alt="" /></a></li>
+			<li><a href=""><img src="images/logo/5.png" alt="" /></a></li>
+			<li><a href=""><img src="images/logo/6.png" alt="" /></a></li>
+			<li><a href=""><img src="images/logo/7.png" alt="" /></a></li>
+			<li><a href=""><img src="images/logo/8.png" alt="" /></a></li>
+			<li><a href=""><img src="images/logo/9.png" alt="" /></a></li>
+		</ul>
+	</body>
+	<script src="js/nick.1.0.2.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/NickActive.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+		$('.box li').hover(function(){
+			
+			$(this).siblings().stop().fadeTo(0.4);
+			
+		},function(){
+			
+			$(this).siblings().stop().fadeTo(1);
+			
+		})
+		
+	</script>
+</html>

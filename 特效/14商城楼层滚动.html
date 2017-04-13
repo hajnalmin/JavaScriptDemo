@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.nav{
+			position: fixed;
+			left: 20px;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		.nav li{
+			width: 40px;
+			font: 14px/40px "微软雅黑";
+			text-align: center;
+			border: 1px solid #ccc;
+			margin-top: -1px;
+		}
+		
+		.nav .active{
+			color: red;
+		}
+		
+		.floor li{
+			height: 450px;
+			font: 60px/120px "微软雅黑";
+			text-align: center;
+			border: 2px solid red;
+		}
+	</style>
+	<body>
+		<ul class="nav">
+			<li>1楼</li>
+			<li>2楼</li>
+			<li>3楼</li>
+			<li>4楼</li>
+			<li>5楼</li>
+			<li>6楼</li>
+			<li>7楼</li>
+			<li>8楼</li>
+		</ul>
+		
+		<ul class="floor">
+			<li>第1楼</li>
+			<li>第2楼</li>
+			<li>第3楼</li>
+			<li>第4楼</li>
+			<li>第5楼</li>
+			<li>第6楼</li>
+			<li>第7楼</li>
+			<li>第8楼</li>
+		</ul>
+	</body>
+	<script src="js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+		var floor = $('.floor li');
+		
+		var nav = $('.nav li');
+		
+		//1. 添加窗口滚动事件
+		
+		$(window).scroll(function(){
+			
+			//2. 获取滚动条移动的距离 
+			
+			var sTop = $(window).scrollTop();
+			
+			//3.遍历所有楼层
+			
+			floor.each(function(){
+				
+				//4. 获取当前楼层到页面顶部的距离 
+				
+				var curTop = $(this).offset().top;
+				
+				//5. 如果滚动条的位置大于等于 当前楼层到页面的距离  表示到了这层楼
+				if(sTop >= curTop){
+					
+					$(this).css({color:'blue'});
+					
+					//6.获取当前楼层的索引值 
+					
+					var index = $(this).index();
+					
+					//7.根据索引值找到对应的导航 添加类名 其它小伙伴删除类名
+					
+					nav.eq(index).addClass('active').siblings().removeClass('active');
+					
+				}else{
+					
+					
+					$(this).css({color:'#000'})
+				}
+				
+				
+			})
+			
+			
+		})
+		
+		//8.导航单击事件
+		
+		nav.click(function(){
+			
+			//9. 获取当前元素索引值
+			
+			var index = $(this).index();
+			
+			//10.根据索引值获取对应楼层到页面顶部的距离 
+			
+			var top1 = floor.eq(index).offset().top;
+			
+			//11.兼容调整滚动条位置
+			
+			$('html,body').stop().animate({scrollTop:top1})
+			
+		})
+		
+		
+	</script>
+</html>

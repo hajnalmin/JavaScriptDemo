@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+
+		<!--
+			
+			解决IE8对象不支持js方法keys()
+			7.写一个方法统计对象中有多少个属性
+			
+		-->
+		<script type="text/javascript">
+		
+			
+			function zhmKeys(obj) {
+				var index = 0;
+				for(var i in obj) {
+					index++;
+				}
+				return index;
+			}
+
+			var obj = {
+				name: "zhm",
+				age: 12,
+				pet: 'kitty'
+			};
+
+			console.log(zhmKeys(obj));
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		img{
+			position: fixed;
+			right: 0;
+			bottom: 0;
+			display: none;
+		}
+		body{
+			height: 2000px;
+		}
+	</style>
+	<body>
+		<img src="images/top.gif"/>
+	</body>
+	<script src="js/jquery-1.7.2.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		$(window).scroll(function(){
+			
+			//1. 获取滚动距离 
+			
+			var sTop = $(this).scrollTop();
+			
+			//2. 如果滚动距离 超过某个值就显示图片否则隐藏
+			
+			if(sTop>=150){// >= $(window).height()
+				
+				$('img').show();
+				
+			}else{
+				$('img').hide();
+			}
+			
+			
+		})
+		
+		$('img').click(function(){
+			
+			//为了兼容同时选中html与body
+			
+			//window.scrollTo(0,0) 原生设置滚动条位置 x,y
+
+			$('body,html').stop().animate({scrollTop:0},2000)
+			
+		})
+		
+		
+	</script>
+</html>

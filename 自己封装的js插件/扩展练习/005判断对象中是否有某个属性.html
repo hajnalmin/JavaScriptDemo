@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<!--
+			
+			5.写一个方法判断对象中是否包含某个数据或者属性
+		-->
+
+		<script>
+			//是否包含某个属性
+			function hasPrototype(object, name) {
+				
+				return !object.hasOwnProperty(name) && (name in object);
+			}
+			
+			
+			
+			//是否包含某个数据
+			function hasData(object, value) {
+
+				for(var i in object) {
+					if(object[i] == value) {
+						return "存在";
+					}
+				}
+				return "不存在";
+			}
+			
+			var obj = {
+				name:"zhm",
+				age:12,
+				pet:"kitty"
+			}
+			
+			console.log(obj.hasOwnProperty("age"));
+			console.log(hasData(obj,"kitty"));
+			
+			
+		</script>
+	</body>
+
+</html>

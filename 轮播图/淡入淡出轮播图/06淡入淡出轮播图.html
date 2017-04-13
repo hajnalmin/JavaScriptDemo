@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>淡入淡出轮播图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        img {
+            display: block;
+        }
+        .banner {
+            width: 600px;
+            height: 350px;
+            margin: 50px auto;
+            position: relative;
+            border: 1px solid #000000;
+        }
+        .list li {
+            display: none;
+            position: absolute;
+            left: 0;
+            right: 0;
+        }
+        .list .active {
+            display: block;
+        }
+        .buttons {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+        }
+        .buttons li {
+            float: left;
+            width: 30px;
+            font: 16px/30px "微软雅黑";
+            margin-right: 10px;
+            border-radius: 50%;
+            background-color: deeppink;
+            color: #FFFFff;
+            text-align: center;
+            cursor: pointer;
+        }
+        .buttons .active {
+            background-color: purple;
+        }
+        .arrow {
+            width: 30px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.3);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #FFFFff;
+            font: 18px/60px "宋体";
+            text-align: center;
+            cursor: pointer;
+        }
+        .arrow:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        #prev {
+            left: 0;
+        }
+        #next {
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="banner">
+    <ul class="list">
+        <li class="active"><a href="#"><img src="images/banner/1.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/banner/2.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/banner/3.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/banner/4.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/banner/5.jpg" alt=""/></a></li>
+        <li><a href="#"><img src="images/banner/6.jpg" alt=""/></a></li>
+    </ul>
+    <ul class="buttons">
+        <li class="active">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+    <span class="arrow" id="prev">&lt;</span>
+    <span class="arrow" id="next">&gt;</span>
+</div>
+
+<script src="js/jquery-1.7.2.min.js"></script>
+
+<script>
+    var $list = $('.list li');
+    var $btn = $('.buttons li');
+    var $prev = $('#prev');
+    var $next = $('#next');
+    var indexNow = 0;
+    var count = $list.length;
+    var timer = null;
+
+
+    function core(num) {
+        $btn.eq(num).addClass('active').siblings().removeClass('active');
+        $list.eq(num).stop().fadeIn(1000).siblings().fadeOut(500);
+    }
+
+
+    $btn.click(function () {
+        indexNow = $(this).index();
+        core(indexNow);
+    });
+
+
+    function play() {
+        indexNow++;
+        if (indexNow > count - 1) {
+            indexNow = 0;
+        }
+        core(indexNow);
+    }
+
+    $next.click(play);
+    $prev.click(function () {
+        indexNow--;
+        if (indexNow < 0) {
+            indexNow = count - 1;
+        }
+        core(indexNow);
+    });
+
+    timer = setInterval(play,1000);
+    $('.banner').hover(function(){
+        clearInterval(timer);
+    },function(){
+        timer = setInterval(play,1000);
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+
+		<div>
+			<p>1</p>
+			<p class="test">2</p>
+			<p>3</p>
+			<!--
+				014判断元素是否含有某个类名.html
+				
+				使用正则表达式的边界值判断
+				
+				
+			-->
+
+
+		</div>
+	</body>
+
+	<script>
+		
+		
+		function getStr(search,data) {
+
+			var reg = new RegExp('\\b'+search+'\\b');
+			
+			return reg.test(data)
+		}
+		
+		console.log(getStr('a','ab da de a der'))
+	</script>
+
+</html>

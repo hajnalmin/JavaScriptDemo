@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="http://www.w3.org/2000/svg"
+><metadata
+></metadata
+><defs
+><font horiz-adv-x="508"
+><font-face font-family="qq401541212" units-per-em="2048" ascent="1854" descent="-434"
+></font-face
+><missing-glyph horiz-adv-x="1024" d="M100 0V1434H924V0H100ZM150 50H874V1384H150V50ZM325 1148q31 28 58 43q53 30 112 30q92 0 148 -47.5T699 1046q0 -49 -23 -98.5T589 818Q526 738 490 686T454 587q0 -38 24 -133H446q-35 97 -35 148q0 76 81.5 218T574 1037q0 57 -33 90t-91 33q-38 0 -69 -17q-26 -15 -56 -40v45ZM389 334l57 58q11 10 20 10q10 0 22 -11l56 -60q9 -11 9 -20q0 -11 -10 -22L487 227Q473 213 466 213q-11 0 -20 10l-61 71q-7 9 -7 18q0 10 11 22Z"
+></missing-glyph
+><glyph unicode=" " d=""
+></glyph
+><glyph unicode="&#xa0;" d=""
+></glyph
+><glyph unicode="&#xe520;" horiz-adv-x="818" d="M977 564L539 1002Q506 896 506 784q0 -123 40 -238H993q-10 10 -16 18ZM1947 1023H1500q8 -8 16 -18L1954 567q16 52 24.5 106.5T1987 784q0 124 -40 239ZM1899 1132q-112 211 -326 317L1257 1132h642ZM594 435Q706 226 917 122l315 313H594ZM1594 759V130q210 112 315 325L1594 770V759ZM1246 1525q-123 0 -238 -40V1038l454 454q-26 8 -52 14t-53 10t-55 6.5t-56 2.5ZM1029 77Q1135 44 1246 44q62 0 121.5 10T1483 84V529q-8 -8 -16 -14L1029 77ZM897 1437q-39 -21 -77 -47.5t-72 -58t-63.5 -66t-55.5 -73T584 1112L897 799v638Z"
+></glyph
+></font
+></defs
+><g style="font-family: &quot;qq401541212&quot;; font-size:50;fill:black"
+><text x="20" y="50"
+>!&quot;#$%&amp;&#39;()*+,-./0123456789:;&#229;&lt;&gt;?</text
+><text x="20" y="100"
+>@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_</text
+><text x="20" y="150"
+>` abcdefghijklmnopqrstuvwxyz|{}~</text
+></g
+></svg
+>

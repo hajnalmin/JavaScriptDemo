@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .banner {
+            width: 600px;
+            height: 350px;
+            margin: 5px auto;
+            border: 1px solid #000000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .list {
+            width: 5000px;
+        }
+
+        .list li {
+            float: left;
+        }
+
+        .buttons {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+        }
+        .buttons .active{
+            background-color: purple;
+        }
+        .buttons li {
+            float: left;
+            width: 30px;
+            height: 30px;
+            background-color: deeppink;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 16px;
+            line-height: 30px;
+            color: #ffffff;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        .arrow{
+            width: 30px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.3);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ffffff;
+            font:18px/60px "微软雅黑";
+            text-align: center;
+            cursor: pointer;
+        }
+        .arrow:hover{
+            background: rgba(0, 0, 0, 0.7);
+        }
+        #prev{
+            left: 0;
+        }
+        #next{
+            right: 0;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="banner">
+    <ul class="list">
+        <li><img src="images/banner/1.jpg" alt=""/></li>
+        <li><img src="images/banner/2.jpg" alt=""/></li>
+        <li><img src="images/banner/3.jpg" alt=""/></li>
+        <li><img src="images/banner/4.jpg" alt=""/></li>
+        <li><img src="images/banner/5.jpg" alt=""/></li>
+        <li><img src="images/banner/6.jpg" alt=""/></li>
+    </ul>
+    <ul class="buttons">
+        <li class="active">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+    <span class="arrow" id="prev">&lt;</span>
+    <span class="arrow" id="next">&gt;</span>
+
+</div>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script>
+    //1.初始化获取元素
+    var list = $('.list');
+    var first = list.children(':first').clone(true);
+    var index = 0;
+    var length = list.children().length;
+    var width = list.children(':first').width();
+    var btns = $('.buttons li');
+    //2.克隆第一个元素放到尾部
+    list.append(first);
+    //3.定义核心函数
+    function core(num){
+        //3.1根据索引值去找对应的按钮
+        btns.eq(num>=btns.length?0:num).addClass('active').siblings().removeClass('active');
+        //3.2根据索引值计算left,执行动画移动图片
+        list.stop().animate({"margin-left":(-num * width)});
+    }
+    //4.定义一个函数用于定时器和右箭头
+    function play(){
+        index++;
+        if(index>length){
+            //瞬间将位置调整到第一张图也就是0
+            list.css("margin-left",0);
+            //调整到0的位置显示的还是第一张  下一张索引应该是1 也就是第二张图
+            index = 1;
+        }
+        core(index);
+    }
+    
+    var sid = setInterval(play,2000);
+    $('#next').click(play);
+
+    //5.左箭头的设置
+    $('#prev').click(function(){
+        index--;
+        if(index<0){
+            //如果索引值于0 瞬间调整到最后一张图的位置，最后一张和第一张是相同的
+            list.css("margin-left",-length*width);
+            //此时索引值为5
+            index = length-1;
+        }
+        core(index);
+    });
+
+    //6.移入移出事件
+    $('.banner').hover(function(){
+        clearInterval(sid)
+    },function(){
+        sid = setInterval(play,2000);
+    });
+
+    //7.按钮点击切换
+    btns.click(function(){
+        //获取当前元素值
+        core(index = $(this).index())
+
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

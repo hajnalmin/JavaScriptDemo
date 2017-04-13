@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<!--
+		6. 写一个方法对数据进行合并，无论何种数据类型都要能进行合并
+		合并数据(两个数组，两个对象，一个对象和一个数组，str，number····)
+		
+	
+	
+-->
+
+	<body>
+
+		<script>
+			function merge(data1, data2) {
+
+				//为了不改变变量
+				var obj = {};
+				for(var i in data1) {
+					obj[i] = data1[i];
+				}
+
+				for(var i in data2) {
+					obj[i] = data2[i];
+
+				}
+
+				return obj;
+			}
+
+			var obj1 = { name: 'zhm', age: 12, pet: "kitty" };
+			var obj2 = { hobby: "sing" ,name:"xiaomign"};
+
+			console.log(merge(obj1,obj2));
+		</script>
+
+	</body>
+
+</html>

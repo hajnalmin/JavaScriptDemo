@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>使用ajax加载户外数据</title>
+    <style>
+        body{
+            position: relative;
+            min-height: 600px;
+        }
+        .wrap {
+            width: 1200px;
+            margin: 20px auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .list {
+            width: 1215px;
+            overflow: hidden;
+        }
+
+        .list .box {
+            float: left;
+            width: 385px;
+            background: #eff2f6;
+            margin: 0 20px 25px 0;
+        }
+
+        .list .box .pic img {
+            width: 100%;
+            transition: .2s;
+        }
+
+        .list .box:hover .pic img {
+            margin-top: -20px;
+        }
+
+        .pic {
+            position: relative;
+            height: 215px;
+            overflow: hidden;
+        }
+
+        .pic div {
+            font: 14px/20px "微软雅黑";
+            color: #fff;
+            position: absolute;
+            bottom: 20px;
+            padding: 0 25px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pic div span:last-child {
+            float: right;
+            font-size: 24px;
+        }
+
+        .pic div span:last-child b {
+            font-size: 14px;
+        }
+
+        .title {
+            font: 16px/24px "微软雅黑";
+            color: #333333;
+            padding: 5px 25px 10px;
+            height: 48px;
+        }
+
+        .more {
+            width: 200px;
+            display: block;
+            margin: 10px auto;
+            border: 1px solid #cccccc;
+            text-align: center;
+            font: 14px/40px "微软雅黑";
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /*遮罩层的样式*/
+        .mask{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            display: none;
+            background: rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+        .loading{
+            position: absolute;
+            bottom: 300px;
+            left: 0;
+            right: 0;
+            width: 100px;
+            margin: 0 auto;
+            display: none;
+            z-index: 1000;
+
+        }
+        .loading img{
+            width: 100px;
+            height: 80px;
+
+        }
+    </style>
+</head>
+<body>
+<div class="mask"></div>
+<div class="loading">
+    <img src="img/loading.gif" alt=""/>
+</div>
+<div class="wrap">
+    <div class="list">
+        <!--<div class="box">
+            <div class="pic">
+                <img src="1.jpg" alt=""/>
+
+                <div>
+                    <span>02/18 北京出发</span>
+                    <span><b>¥</b>70</span>
+                </div>
+            </div>
+            <div class="title">冬季必走经典路线 白河峡谷 云梦仙境看冰瀑（1日行程）</div>
+        </div>-->
+
+
+    </div>
+
+
+    <div class="more">
+        查看更多
+    </div>
+
+</div>
+<script src="js/ajax.js"></script>
+<script>
+
+</script>
+</body>
+</html>

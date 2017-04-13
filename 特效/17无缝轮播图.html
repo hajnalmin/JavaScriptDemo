@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		img{
+			display: block;
+		}
+		
+		.banner{
+			width: 600px;
+			height: 350px;
+			margin: 50px auto;
+			position: relative;
+			border: 1px solid #000;
+			overflow: hidden;
+		}
+		
+		.list{
+			width: 5000px;
+		}
+		
+		.list li{
+			float: left;
+		}
+		
+		
+		.btn{
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			bottom: 20px;
+			display: none;
+		}
+		
+		.btn li{
+			float: left;
+			width: 30px;
+			font: 14px/30px "微软雅黑";
+			text-align: center;
+			border-radius: 50%;
+			background: deeppink;
+			color: #fff;
+			cursor: pointer;
+			margin: 0 5px;
+		}
+		
+		.banner>a{
+			position: absolute;
+			width: 30px;
+			font: 24px/60px "新宋体";
+			text-align: center;
+			text-decoration: none;
+			background: rgba(0,0,0,0.3);
+			top: 50%;
+			transform: translateY(-50%);
+			color: #fff;
+		}
+		
+		.banner>a:last-child{
+			right: 0;
+		}
+		/**
+		 * of-type限制类型
+		 * li:first-child 如果第一个子元素不是li是选择不到的
+		 * 
+		 * 
+		 */
+		.banner>a:nth-of-type(1){
+			left: 0;
+		}
+		
+		.banner>a:hover{
+			background: rgba(0,0,0,0.5);
+		}
+		
+		.btn .active{
+			background: springgreen;
+		}
+		
+	</style>
+	<body>
+		<div class="banner">
+			<!--			ul.list>li*6>a>img[src=images/banner/$.jpg]
+-->
+			<ul class="list">
+				<li class="on"><a href=""><img src="images/banner/1.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/2.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/3.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/4.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/5.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/6.jpg" alt="" /></a></li>
+			</ul>
+			
+			<ul class="btn">
+				<li class="active">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</ul>
+			
+			<a href="javascript:;">&lt;</a>
+			<a href="javascript:;">&gt;</a>
+			
+		</div>
+	</body>
+	<script src="js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		//1. 获取元素
+		
+		var list = $('.list');
+		
+		var firstChildren = list.children('li:first').clone(true);//查找第一个子元素 并克隆
+		
+		//2. 将克隆的元素追加到元素内部尾部
+		
+		list.append(firstChildren);
+		
+		//3. 定义一个变量保存移动的速度 （递增递减值）
+		
+		var speed = -3;
+		
+		//4. 定义一个变量保存要移动的距离 left值
+		
+		var left = 0;
+		
+		//5.开启一个定时器并保存在变量中
+		
+		var sid = setInterval(function(){
+			
+			//6.left值进行递增  
+			
+			left+=speed;
+			
+			
+			//7.根据计算的距离 设置样式
+			
+			list.css('margin-left',left);
+			
+			//8. 如果位置走到最后一张 应该瞬间再从0开始
+			
+			if(left <= (list.children().length-1)*-600){
+				// 最后一张图的位置   宽度*(长度-1)
+				//9.瞬间让left归0
+				
+				left = 0;
+				
+			//  如果不加else前面条件执行后面left>=0的条件也会执行就会进入死循环
+			
+			
+			}else	if(left>=0){
+				
+			//9.1判断 如果大于等于0 瞬间回到最后一张图的位置
+			//9.2瞬间让left为最后一张图的位置
+				
+				left = (list.children().length-1)*-600
+				
+			}
+			
+			
+			
+			
+		},30);
+		
+		
+		//10.左右方向切换事件
+		
+		$('.banner>a:first').click(function(){
+			
+			//11.改变递增值为负值  向左负的
+			
+			speed = - Math.abs(speed);// --得正  先强制将值变成正值 再加负号  
+			
+		})
+		
+		
+		//10.左右方向切换事件
+		
+		$('.banner>a:last').click(function(){
+			
+			//11.改变递增值为正值  向右正值
+			
+			speed = Math.abs(speed);//
+			
+		})
+		
+		
+		
+	
+	</script>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		img{
+			display: block;
+		}
+		
+		.banner{
+			width: 600px;
+			height: 350px;
+			margin: 50px auto;
+			position: relative;
+			border: 1px solid #000;
+			overflow: hidden;
+		}
+		
+		.btn{
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			bottom: 20px;
+		}
+		
+		.btn li{
+			float: left;
+			width: 30px;
+			font: 14px/30px "微软雅黑";
+			text-align: center;
+			border-radius: 50%;
+			background: deeppink;
+			color: #fff;
+			cursor: pointer;
+			margin: 0 5px;
+		}
+		
+		.banner>a{
+			position: absolute;
+			width: 30px;
+			font: 24px/60px "新宋体";
+			text-align: center;
+			text-decoration: none;
+			background: rgba(0,0,0,0.3);
+			top: 50%;
+			transform: translateY(-50%);
+			color: #fff;
+		}
+		
+		.banner>a:last-child{
+			right: 0;
+		}
+		/**
+		 * of-type限制类型
+		 * li:first-child 如果第一个子元素不是li是选择不到的
+		 * 
+		 * 
+		 */
+		.banner>a:nth-of-type(1){
+			left: 0;
+		}
+		
+		.banner>a:hover{
+			background: rgba(0,0,0,0.5);
+		}
+		
+		.btn .active{
+			background: springgreen;
+		}
+		
+	</style>
+	<body>
+		<div class="banner">
+			<!--			ul.list>li*6>a>img[src=images/banner/$.jpg]
+-->
+			<ul class="list">
+				<li class="on"><a href=""><img src="images/banner/1.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/2.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/3.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/4.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/5.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/6.jpg" alt="" /></a></li>
+			</ul>
+			
+			<ul class="btn">
+				<li class="active">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</ul>
+			
+			<a href="javascript:;">&lt;</a>
+			<a href="javascript:;">&gt;</a>
+			
+		</div>
+	</body>
+	<script src="js/nick.1.0.2.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/NickActive.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		//垂直滚动只需要设置style为margin-top并且 轮播的列表不要使用浮动即可
+		
+		//1.选择选项卡按钮元素执行tab方法
+		$('.btn li').tab({
+			
+			banner:'.list li', //设置关联的轮播图列表 ，即需要进行切换的内容。当按钮进行切换时对应的banner也进行切换 
+			
+			loop:false,// 是否启用无缝循环
+			
+			style:'margin-top',//滚动的方向 可以值margin-left left  margin-top top如果使用top或left必须要给banner关联的父级定位
+			
+			prev:'.banner>a:first-of-type',//设置上一个按钮可以是选择器或已经查找好的对象
+			
+			next:'.banner>a:last-of-type'//设置下一个按钮可以是选择器或已经查找好的对象
+			
+		})		
+	
+	</script>
+</html>

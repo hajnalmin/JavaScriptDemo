@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<!--
+		 2.  写一个方法将数据转换成整数,重写parseInt方法
+		 	验证数据范围 -1569325056 ~ 1569325056
+		 	当输入NaN时,强制转换为0(!-----parseInt()会返回NaN)
+		 	当输入1g时,强制转换为0(!-----parseInt()会返回1)
+		 	当输入g1时,强制转换为0(!-----parseInt()会返回NaN)
+
+			
+		-->
+
+		<script>
+			//定义一个函数类
+			
+			function valInt(num){
+				
+				var num = parseInt(num);
+				
+				 return isNaN(num) ? 0:num ;
+				
+			}
+			
+			function valFloat(num){
+				
+				var num = parseFloat(num);
+				
+				 return isNaN(num) ? 0:num ;
+				
+			}
+			
+			
+			//定义一个保留两位小数，没有四舍五入
+
+			function  getToFixed(str,num){
+				var reg =new RegExp("(^[+-]?\\d+\\.\\d{"+num+"})\\d+$");
+				return str.replace(reg,'$1');
+				
+			}
+			
+			
+			console.log(valInt('123.4343'));
+			console.log(valFloat('-123.4332'));
+			console.log(getToFixed('-123.433333333332',2));
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>

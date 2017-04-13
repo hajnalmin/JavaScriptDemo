@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.top{
+			height: 150px;
+			background: #ccc;
+		}
+		
+		img{
+			display: block;
+			margin: 0 auto;
+		}
+		
+		.fixed{
+			position: fixed;
+			width: 100%;
+			top: 0;
+			left: 0;
+		}
+	</style>
+	<body>
+		打酱油
+		<div class="top">
+			顶部
+		</div>
+		<div class="nav">
+			<img src="images/nav.png"/>
+		</div>
+		<div class="content">
+			<img src="images/content.png"/>
+		</div>
+	</body>
+	<script src="js/jquery-1.7.2.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		//1.获取导航到页面顶部的距离
+		
+		var nav = $('.nav');
+		
+		var navTop = nav.offset().top;
+		
+		//2.添加滚动事件
+		
+		$(window).scroll(function(){
+			
+			//3.获取滚动条位置
+			
+			var sTop = $(this).scrollTop();
+			
+			//4. 判断滚动条的位置是否大于等于 导航到页面的距离 
+			
+			if(sTop>=navTop){
+				
+				//5.给导航添加类名让其固定
+				
+				nav.addClass('fixed');
+				
+			}else{
+				
+				//6.删除导航固定类名
+				
+				nav.removeClass('fixed');
+				
+			}
+			
+		})
+		
+	</script>
+</html>

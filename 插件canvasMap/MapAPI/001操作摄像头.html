@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="file" accept="image/*" />
+<img src=""/>
+</body>
+<script type="text/javascript">
+
+    //1.获取元素
+    var files = document.getElementsByTagName('input')[0];
+    var img = document.getElementsByTagName('img')[0];
+
+    //2.添加表单变化事件
+    files.onchange = function(e){
+        var files = e.target.files;
+
+        var upload = files[0];
+
+        //兼容获取URL对象
+        var URL = window.URL ?window.URL:window.webkitURL;
+
+    }
+
+
+</script>
+</html>

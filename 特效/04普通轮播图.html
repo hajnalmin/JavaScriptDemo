@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		img{
+			display: block;
+		}
+		
+		.banner{
+			width: 600px;
+			height: 350px;
+			margin: 50px auto;
+			position: relative;
+			border: 1px solid #000;
+		}
+		
+		.list li{
+			display: none;
+		}
+		
+		.list .on{
+			display: block;
+		}
+		
+		.btn{
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			bottom: 20px;
+		}
+		
+		.btn li{
+			float: left;
+			width: 30px;
+			font: 14px/30px "微软雅黑";
+			text-align: center;
+			border-radius: 50%;
+			background: deeppink;
+			color: #fff;
+			cursor: pointer;
+			margin: 0 5px;
+		}
+		
+		.banner>a{
+			position: absolute;
+			width: 30px;
+			font: 24px/60px "新宋体";
+			text-align: center;
+			text-decoration: none;
+			background: rgba(0,0,0,0.3);
+			top: 50%;
+			transform: translateY(-50%);
+			color: #fff;
+		}
+		
+		.banner>a:last-child{
+			right: 0;
+		}
+		
+		.banner>a:hover{
+			background: rgba(0,0,0,0.5);
+		}
+		
+		.btn .active{
+			background: springgreen;
+		}
+		
+	</style>
+	<body>
+		<div class="banner">
+			<!--			ul.list>li*6>a>img[src=images/banner/$.jpg]
+-->
+			<ul class="list">
+				<li class="on"><a href=""><img src="images/banner/1.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/2.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/3.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/4.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/5.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/6.jpg" alt="" /></a></li>
+			</ul>
+			
+			<ul class="btn">
+				<li class="active">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</ul>
+			
+			<a href="javascript:;">&lt;</a>
+			<a href="javascript:;">&gt;</a>
+			
+		</div>
+	</body>
+	<script src="js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		$('.btn li').hover(function(){
+			
+			//1.鼠标移入  给自己添加类名 其它小伙伴删除类名
+			
+			$(this).addClass('active').siblings().removeClass('active');
+			
+			//2. 获取当前元素索引值
+			
+			var index = $(this).index();
+			
+			//3. 根据当前元素值查找列表中对应的元素给它加类名 其它的删除类名
+			
+			//$('.list li').eq(index).addClass('on').siblings().removeClass('on');
+			
+			$('.list li').eq(index).show().siblings().hide();
+			
+		})
+		
+		//4.保存默认索引值
+		
+		var index = 0;
+		
+		//5. 左右箭头单击事件
+		
+		$('.banner>a:first').click(function(){
+			
+			//6. 索引值--
+			
+			index--;
+			
+			//7.如果索引值小于0则索引值为最后一张的值
+			
+			if(index<0){
+				
+				index = $('.btn li').length-1;
+				
+			}
+		
+			//8. 根据索引值找到要显示的按钮及内容图片
+			
+			$('.btn li').eq(index).addClass('active').siblings().removeClass('active');
+			
+			$('.list li').eq(index).show().siblings().hide();
+			
+		})
+		
+		
+		//5. 左右箭头单击事件
+		
+		$('.banner>a:last').click(function(){
+			
+			//6. 索引值++
+			
+			index++;
+			
+			//7.如果索引值大于长度-1则索引值为0
+			
+			if(index>$('.btn li').length-1){
+				
+				index = 0;
+				
+			}
+			
+			//8. 根据索引值找到要显示的按钮及内容图片
+			
+			$('.btn li').eq(index).addClass('active').siblings().removeClass('active');
+			
+			$('.list li').eq(index).show().siblings().hide();
+			
+		})
+		
+	</script>
+</html>

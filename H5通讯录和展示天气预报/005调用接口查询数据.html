@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		车次：<input type="text" />
+		<button>获取车次信息</button>
+
+		<script src='js/jquery.min.js'></script>
+		<script type="text/javascript">
+			$(function() {
+				function demo() {
+					alert();
+				}
+
+				window.demo = demo;
+
+				var code = $('input');
+				var btn = $('button');
+
+				btn.click(function() {
+
+					var txt = code.val().toUpperCase();
+
+					$.ajax({
+						type: "get",
+						dataType: 'jsonp',
+						jsonpCallback: 'demo',
+						url: 'http://apis.juhe.cn/train/s?name=' + txt + '&dtype=&key=dd95b52af9d1b505805b64dc2ea68951',
+						success: function(data) {
+							console.log(data);
+						},
+						error: function(a) {
+							console.log(a);
+						}
+					});
+
+				})
+
+			})
+		</script>
+
+	</body>
+
+</html>

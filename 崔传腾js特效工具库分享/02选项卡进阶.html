@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		hr{
+			margin: 10px;
+		}
+		
+		.wrap{
+			width: 1000px;
+			margin: 0 auto;
+			padding: 10px;
+		}
+		
+		
+		.nav{
+			overflow: hidden;
+		}
+		
+		.nav li{
+			float: left;
+			width: 30px;
+			font: 16px/80px "微软雅黑";
+			background: pink;
+			text-align: center;
+			color: #fff;
+			width: 100px;
+			margin: 0 5px;
+			border: 2px solid transparent;
+			opacity: 0.5;
+			transition: .5s;
+		}
+		
+		/**
+		 * 建议给被选中的元素添加类名进行样式的切换，这样更高效且易于维护
+		 * 该例中当元素被选中时便有了active类名因此 边框与颜色有变化 ，因为添加了transition
+		 * 所以有过渡感觉比较平和
+		 * tab方法默认支持类名切换，可以自定义类名的名称
+		 */
+		
+		.nav .active{
+			border-color: red;
+			opacity: 1;
+		}
+		
+		
+	</style>
+	<body>
+		<div class="wrap">
+			
+			<ul class="nav">
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</ul>
+			
+		</div>
+	</body>
+	<script src="js/nick.1.0.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/NickActive.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+		//1.tab方法的配置参数使用
+		
+		$('.nav li').tab({//要进行切换的元素并非一定是兄弟关系只要被选中的元素都会进行切换
+			
+			active:'active',//设置被选中元素的类名，默认值为active
+			
+			auto:true, //设置是否启用自动播放，默认值为true
+			
+			trigger:'mouseover',//设置触发的事件类型，默认值为click，即单击切换
+			
+			delay:1,//设置自动播放时的间隔时间，默认值为3秒
+			
+			index:0, //设置默认显示的元素的索引值，当有元素有active指定的类名时该设置无效
+			
+			next:'.box button:nth-of-type(2)',//指定一个元素单击可以切换到下一个，可以是选择器也可以是DOM或nick对象
+			
+			prev:document.querySelector('.box button:nth-of-type(1)')//指定一个元素单击可以切换到上一个，可以是选择器也可以是DOM或nick对象
+			
+		});
+		
+		
+		
+		
+	</script>
+</html>

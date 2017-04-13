@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+		img{
+			display: block;
+		}
+		
+		.banner{
+			width: 600px;
+			height: 350px;
+			margin: 50px auto;
+			position: relative;
+			border: 1px solid #000;
+		}
+		
+		.list li{
+			display: none;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		
+		.list .on{
+			display: block;
+		}
+		
+		.btn{
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			bottom: 20px;
+		}
+		
+		.btn li{
+			float: left;
+			width: 30px;
+			font: 14px/30px "微软雅黑";
+			text-align: center;
+			border-radius: 50%;
+			background: deeppink;
+			color: #fff;
+			cursor: pointer;
+			margin: 0 5px;
+		}
+		
+		.banner>a{
+			position: absolute;
+			width: 30px;
+			font: 24px/60px "新宋体";
+			text-align: center;
+			text-decoration: none;
+			background: rgba(0,0,0,0.3);
+			top: 50%;
+			transform: translateY(-50%);
+			color: #fff;
+		}
+		
+		.banner>a:last-child{
+			right: 0;
+		}
+		
+		.banner>a:hover{
+			background: rgba(0,0,0,0.5);
+		}
+		
+		.btn .active{
+			background: springgreen;
+		}
+		
+	</style>
+	<body>
+		<div class="banner">
+			<!--			ul.list>li*6>a>img[src=images/banner/$.jpg]
+-->
+			<ul class="list">
+				<li class="on"><a href=""><img src="images/banner/1.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/2.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/3.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/4.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/5.jpg" alt="" /></a></li>
+				<li><a href=""><img src="images/banner/6.jpg" alt="" /></a></li>
+			</ul>
+			
+			<ul class="btn">
+				<li class="active">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+				<li>6</li>
+			</ul>
+			
+			<a href="javascript:;">&lt;</a>
+			<a href="javascript:;">&gt;</a>
+			
+		</div>
+	</body>
+	<script src="js/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		/**
+		 * 
+		 * 轮播图的核心原理就是根据索引值找到元素设置样式
+		 * 关键就是索引值
+		 * 
+		 */
+		
+		var index = 0;
+		
+		//1.定义一个核心函数  根据指定的索引值找元素并设置样式
+		
+		function core(num){
+			
+			//2.根据参数索引值  找到对应的按钮添加类名小伙伴删除类名
+			
+			$('.btn li').eq(num).addClass('active').siblings().removeClass('active');
+			
+			$('.list li').eq(num).stop().fadeIn().siblings().stop().fadeOut();
+			
+		}
+		
+		//3.按钮单击事件
+		
+		$('.btn li').click(function(){
+			
+			//4. 获取当前元素索引值
+			
+			index = $(this).index();
+			
+			//5. 调用核心函数并且给它索引值
+			
+			core(index);
+			
+		})
+		
+		//6.左右箭头事件
+		
+		$('.banner>a:first').click(function(){
+			
+			index--;
+			
+			if(index<0){
+				
+				index = $('.btn li').length-1;
+				
+			}
+			
+			//7.调用核心函数并传递索引值
+			
+			core(index);
+			
+			
+		})
+		//7.1 定时器要使用的回调函数
+		
+		function play(){
+			
+			index++;
+			
+			if(index> $('.btn li').length-1){
+				
+				index =0;
+				
+			}
+			
+			//9.调用核心函数并传递索引值
+			
+			core(index);
+			
+			
+		}
+		
+		
+		//6.左右箭头事件
+		
+		$('.banner>a:last').click(play)
+		
+		
+		//8. 开启一个定时器
+		
+		var sid = setInterval(play,1000);
+		
+		
+		//10.添加鼠标移入移出
+		
+		$('.banner').hover(function(){
+			
+			//11.清除定时器
+
+			clearInterval(sid);
+			
+		},function(){
+			
+			sid = setInterval(play,1000);
+		
+			
+		})
+		
+		
+	
+	</script>
+</html>

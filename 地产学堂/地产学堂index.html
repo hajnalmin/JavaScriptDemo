@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <link rel="stylesheet" href="css/reset.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+</head>
+<body>
+<!-- 头部开始-->
+<div class="head">
+    <div class="wrap clearfix">
+        <!-- 左侧导航开始-->
+        <ul class="h_nav">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">在线课程</a></li>
+            <li><a href="#">公开课</a></li>
+            <li><a href="#">微课堂</a></li>
+            <li><a href="#">问答专区</a></li>
+            <li><a href="#">地产文库</a></li>
+            <li><a href="#">办理年卡</a></li>
+        </ul>
+        <!-- 左侧导航结束-->
+        <!-- 右侧导航开始-->
+        <ul class="h_info">
+            <li><a href="#"><img src="images/info_03.png" alt=""/></a></li>
+            <li><a href="#"><img src="images/info_05.png" alt=""/></a></li>
+            <li><a href="#"><img src="images/info_07.png" alt=""/></a></li>
+            <li class="msg"><a href="#">消息<span>6</span></a></li>
+            <li>4008 031 051</li>
+        </ul>
+        <!-- 右侧导航结束-->
+    </div>
+</div>
+<!-- 头部结束-->
+<!--顶部开始-->
+
+<div class="top">
+    <div class="wrap clearfix">
+        <h1 class="logo"><a href=""><img src="images/info_13.png" alt=""/></a></h1>
+        <!--搜索框开始-->
+        <div class="search">
+            <input type="text"/>
+            <a href="javascript:;" class="s_btn">搜索</a>
+            <ul class="keywords">
+                <li>微课堂</li>
+                <li>项目总经理培训</li>
+                <li>精装修</li>
+                <li>成本管理</li>
+                <li>人力资源</li>
+            </ul>
+        </div>
+        <!--搜索框结束-->
+
+        <!--购物车开始-->
+
+        <div class="cart">
+            <a href="javascript:;" class="car">我的购物车<span>0</span></a>
+        </div>
+
+        <!--购物车结束-->
+    </div>
+</div>
+
+<!--顶部结束-->
+
+<!--banner开始-->
+<div class="banner">
+    <div class="wrap clearfix">
+        <img class="avator" src="images/info_21.png" alt=""/>
+        <!--登录信息开始-->
+        <ul class="login_info">
+            <li>上午好,<a href="#">123456</a><span class="edit">编辑</span></li>
+            <li>学分：<b>2866</b>积分：<b>267</b></li>
+            <li>账户名：15852407110</li>
+            <li>上次登录时间：2015.12.01 10:53:25</li>
+        </ul>
+        <!--登录信息结束-->
+        <a href="javascript:;" class="sign_in">签到</a>
+    </div>
+</div>
+<!--banner结束-->
+
+<!--主体容器开始-->
+
+<div class="container">
+    <div class="wrap clearfix">
+        <!--左侧菜单开始-->
+        <ul class="sidebar">
+            <li>
+                <a href="#">个人资料</a>
+                <ul>
+                    <li><a href="index">个人信息</a></li>
+                    <li><a href="./icon">上传头像</a></li>
+                    <li><a href="./edu">教育信息</a></li>
+                    <li><a href="./job">职业经历</a></li>
+                    <li><a href="./feat">个人专长</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">账号安全</a>
+                <ul>
+                    <li><a href="./pwd">修改密码</a></li>
+                    <li><a href="./phone">绑定手机</a></li>
+                    <li><a href="./email">绑定邮箱</a></li>
+                    <!-- <li><a href="./login">登录</a></li>
+                     <li><a href="./register">注册</a></li>-->
+                </ul>
+            </li>
+        </ul>
+        <!--左侧菜单结束-->
+
+        <!--主体内容开始-->
+        <div class="con">
+            <div class="base">
+                <p class="title">完善个人资料是让别人认识你的第一步</p>
+                <!--基本信息开始-->
+                <ul>
+                    <li>
+                        <div class="b_left">登录账号：</div>
+                        <div class="b_right" id="name">15852407110</div>
+                    </li>
+                    <li>
+                        <div class="b_left">昵称：</div>
+                        <div class="b_right"><input type="text"  id="alias"/></div>
+                    </li>
+                    <li>
+                        <div class="b_left">所在地：</div>
+                        <div class="b_right clearfix">
+                            <div class="select">
+                                <p>请选择</p>
+                                <div class="btn">
+                                    <a href="javascript:;" class="up"></a>
+                                    <a href="javascript:;" class="down"> </a>
+                                </div>
+                                <ol id="province">
+                                    <li>选项1</li>
+                                    <li>选项2</li>
+                                    <li>选项3</li>
+                                    <li>选项4</li>
+                                    <li>选项5</li>
+                                    <li>选项6</li>
+                                </ol>
+                            </div>
+                            <div class="select">
+                                <p>请选择</p>
+                                <div class="btn">
+                                    <a href="javascript:;" class="up"></a>
+                                    <a href="javascript:;" class="down"> </a>
+                                </div>
+                                <ol id="city">
+                                    <li>选项1</li>
+                                    <li>选项2</li>
+                                    <li>选项3</li>
+                                    <li>选项4</li>
+                                    <li>选项5</li>
+                                    <li>选项6</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="b_left">性别：</div>
+                        <div class="b_right">
+                            <div class="checkbox" id="sex">
+                                <label class="checked">男</label>
+                                <label>女</label>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="b_left">真实姓名：</div>
+                        <div class="b_right"><input type="text" id="real_name"/><span>(填写后不可修改)</span></div>
+                    </li>
+                    <li>
+                        <div class="b_left">生日：</div>
+                        <div class="b_right">
+
+                            <div class="select">
+                                <p>-年-</p>
+                                <div class="btn">
+                                    <a href="javascript:;" class="up"></a>
+                                    <a href="javascript:;" class="down"> </a>
+                                </div>
+                                <ol class="year">
+                                    <li>选项1</li>
+                                    <li>选项2</li>
+                                    <li>选项3</li>
+                                    <li>选项4</li>
+                                    <li>选项5</li>
+                                    <li>选项6</li>
+                                </ol>
+                            </div>
+
+                            <div class="select">
+                                <p>-月-</p>
+                                <div class="btn">
+                                    <a href="javascript:;" class="up"></a>
+                                    <a href="javascript:;" class="down"> </a>
+                                </div>
+                                <ol class="month">
+                                    <li>选项1</li>
+                                    <li>选项2</li>
+                                    <li>选项3</li>
+                                    <li>选项4</li>
+                                    <li>选项5</li>
+                                    <li>选项6</li>
+                                </ol>
+                            </div>
+
+                            <div class="select">
+                                <p>-日-</p>
+                                <div class="btn">
+                                    <a href="javascript:;" class="up"></a>
+                                    <a href="javascript:;" class="down"> </a>
+                                </div>
+                                <ol class="day">
+                                    <li>选项1</li>
+                                    <li>选项2</li>
+                                    <li>选项3</li>
+                                    <li>选项4</li>
+                                    <li>选项5</li>
+                                    <li>选项6</li>
+                                </ol>
+                            </div>
+
+
+                        </div>
+                    </li>
+                    <li>
+                        <div class="b_left">邮箱：</div>
+                        <div class="b_right"><input type="text" id="email"/><span><a href="javascript:;">验证邮箱</a></span></div>
+                    </li>
+                    <li>
+                        <div class="b_left">部门：</div>
+                        <div class="b_right">
+                            <input type="text" id="sector"/>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="b_left">职务：</div>
+                        <div class="b_right">
+                            <input type="text" id="title"/>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="b_left">详细介绍：</div>
+                        <div class="b_right">
+                            <textarea name="" id="intro" ></textarea>
+                            <span>请不要超过100个汉字</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="b_left">&nbsp;</div>
+                        <div class="b_right"><a class="save" href="javascript:;">保存</a></div>
+                    </li>
+                </ul>
+                <!--基本信息结束-->
+            </div>
+        </div>
+        <!--主体内容结束-->
+    </div>
+</div>
+<!--主体容器结束-->
+
+<!--脚部开始-->
+<div class="footer">
+    <div class="wrap">
+        <!--友情链接开始-->
+        <div class="frends_link ">
+            <h6 class="title">友情链接</h6>
+            <div class="slide">
+                <ul class="clearfix">
+                    <li><a href="#"><img src="images/frends.png" alt=""/></a></li>
+                    <li><a href="#"><img src="images/frends.png" alt=""/></a></li>
+                    <li><a href="#"><img src="images/frends.png" alt=""/></a></li>
+                    <li><a href="#"><img src="images/frends.png" alt=""/></a></li>
+                    <li><a href="#"><img src="images/frends.png" alt=""/></a></li>
+                    <li><a href="#"><img src="images/frends.png" alt=""/></a></li>
+                    <li><a href="#"><img src="images/frends.png" alt=""/></a></li>
+                    <li><a href="#"><img src="images/frends.png" alt=""/></a></li>
+                    <li><a href="#"><img src="images/frends.png" alt=""/></a></li>
+                 </ul>
+                <span class="arrow_l">&lt;</span>
+                <span class="arrow_r">&gt;</span>
+            </div>
+        </div>
+        <!--友情链接结束-->
+
+        <!--脚部导航开始-->
+        <ul class="f_nav clearfix">
+            <li><a href="#">关于我们</a>|</li>
+            <li><a href="#">加入我们</a>|</li>
+            <li><a href="#">商务合作</a>|</li>
+            <li><a href="#">新手指南</a>|</li>
+            <li><a href="#">开始学习</a>|</li>
+            <li><a href="#">企业管理</a>|</li>
+            <li><a href="#">企业购买</a>|</li>
+            <li><a href="#">联系我们</a></li>
+        </ul>
+        <!--脚部导航结束-->
+    </div>
+</div>
+
+<!--脚部结束-->
+</body>
+<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
+<!--<script type="text/javascript" src="js/public.js"></script>-->
+</html>

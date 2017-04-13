@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<meta charset="UTF-8">
+		<title>使用ajax加载户外数据</title>
+		<style>
+			body {
+				position: relative;
+				min-height: 600px;
+			}
+			
+			.wrap {
+				width: 1200px;
+				margin: 20px auto;
+				position: relative;
+				z-index: 10;
+			}
+			
+			.list {
+				width: 1215px;
+				overflow: hidden;
+			}
+			
+			.list .box {
+				float: left;
+				width: 385px;
+				background: #eff2f6;
+				margin: 0 20px 25px 0;
+			}
+			
+			.list .box .pic img {
+				width: 100%;
+				transition: .2s;
+			}
+			
+			.list .box:hover .pic img {
+				margin-top: -20px;
+			}
+			
+			.pic {
+				position: relative;
+				height: 215px;
+				overflow: hidden;
+			}
+			
+			.pic div {
+				font: 14px/20px "微软雅黑";
+				color: #fff;
+				position: absolute;
+				bottom: 20px;
+				padding: 0 25px;
+				width: 100%;
+				box-sizing: border-box;
+			}
+			
+			.pic div span:last-child {
+				float: right;
+				font-size: 24px;
+			}
+			
+			.pic div span:last-child b {
+				font-size: 14px;
+			}
+			
+			.title {
+				font: 16px/24px "微软雅黑";
+				color: #333333;
+				padding: 5px 25px 10px;
+				height: 48px;
+			}
+			
+			.detail {
+				margin: 0 auto;
+				width: 80%;
+			}
+			
+			.more,
+			.prev,
+			.showPage {
+				width: 200px;
+				float: left;
+				margin: 10px 20px;
+				border: 1px solid #cccccc;
+				text-align: center;
+				font: 14px/40px "微软雅黑";
+				color: #000;
+				text-decoration: none;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wrap">
+			<div class="list">
+				<!--<div class="box">
+            <div class="pic">
+                <img src="1.jpg" alt=""/>
+
+                <div>
+                    <span>02/18 北京出发</span>
+                    <span><b>¥</b>70</span>
+                </div>
+            </div>
+            <div class="title">冬季必走经典路线 白河峡谷 云梦仙境看冰瀑（1日行程）</div>
+        </div>-->
+
+			</div>
+
+			<div class="detail clearFix">
+				<span class="prev">上一页</span>
+				<span class="showPage"></span>
+				<span class="more">下一页</span>
+			</div>
+
+		</div>
+		<script src="js/ajax.js"></script>
+		<script>
+			/**
+			 * Created by zhm on 2017/2/17.
+			 */
+			var list = document.getElementsByClassName('list')[0];
+			var showPage = document.getElementsByClassName('showPage')[0];
+			var more = document.getElementsByClassName('more')[0];
+			var prev = document.getElementsByClassName('prev')[0];
+			var page = 1;
+			//1.定义一个函数用于jsonp调用
+			function demo(data) {
+				var html = "";
+				var goods = data.goodlist || [];
+				//遍历第一层
+				for (var i = 0; i < goods.length; i++) {
+					//遍历第二层
+					for (var j = 0; j < goods[i].length; j++) {
+						//将当前数据拼成一个li
+						var temp = goods[i][j];
+						//如果tmp是null 为假 终止循环
+						if (!temp) break;
+						var time = temp.goods_spec;
+						html += '<div class="box"><div class="pic"><img src=' + temp.default_image + ' alt=""/>';
+						html += '<div><span>' + time.m + '/' + time.d + ' ' + temp.start_place + '出发</span><span><b>¥</b>' + temp.price + '</span></div>';
+						html += '</div><div class="title">' + temp.title + '</div> </div>';
+					}
+				}
+				showPage.innerHTML = data.nextpage - 1;
+				list.innerHTML = html;
+			}
+			//2.定义一个函数来获取数据
+			function addData() {
+				ajax({
+					url: 'goods.php',
+					data: {
+						page: page
+					},
+					success: function(txt) {
+						//将json字符串转换为json数据
+						var data = JSON.parse(txt);
+						demo(data);
+						//页码加1
+						page++;
+						if (page > 8) return alert('对不起已经是最后一页！');
+					}
+				});
+			}
+
+			function subData() {
+				ajax({
+					url: 'goods.php',
+					data: {
+						page: page
+					},
+					success: function(txt) {
+						//将json字符串转换为json数据
+						var data = JSON.parse(txt);
+						demo(data);
+						page--;
+						console.log(page-1);
+						if (page < 2) return alert('对不起已经是第一页！');
+						
+					}
+				});
+			}
+			addData();
+			//3.点击加载更多   点一次页码加1 默认值是1
+			more.onclick = function() {
+				addData();
+			};
+			prev.onclick = function() {
+				subData();
+			};
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>机械表</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .block {
+            width: 300px;
+            height: 300px;
+            background:  url("images/clock.jpg");
+            background-size:100%;
+            margin: 50px auto;
+            position: relative;
+            border: 1px solid red;
+            box-shadow: 0 0 20px 5px #c5c5c5;
+        }
+
+        #hours, #minutes, #seconds {
+            width: 10px;
+            height: 200px;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            margin-left: -3px;
+
+        }
+
+        #hours {
+            background: url('images/pic_h.png');
+            background-size:100%;
+        }
+
+        #minutes {
+            background: url('images/pic_m.png');
+            background-size:100%;
+        }
+
+        #seconds {
+            background: url('images/pic_s.png');
+            background-size:100%;
+        }
+    </style>
+</head>
+<body>
+<div class="block">
+    <div id="hours"></div>
+    <div id="minutes"></div>
+    <div id="seconds"></div>
+</div>
+<script type="text/javascript">
+    function $(id) {
+        return document.getElementById(id);
+    }
+
+    var hours = $("hours");
+    var minutes = $("minutes");
+    var seconds = $("seconds");
+
+    function play(){
+        var date = new Date();
+        var h = date.getHours();
+        var m = date.getMinutes();
+        var s = date.getSeconds();
+
+        //设置当前时间他们转动的角度
+
+        if(h>12){
+            h = h - 12;
+        }
+        seconds.style.transform = "rotate("+s*6+"deg)";//相当于1s占6度，当前角度为s*6
+        minutes.style.transform = "rotate("+(m+s/60)*6+"deg)";//一圈60分钟，m*6分占的度数+1分钟10s,秒占的度数
+        hours.style.transform = "rotate("+(h+m/60)*30+"deg)";
+    }
+
+    setInterval(play, 1000);
+
+
+</script>
+</body>
+</html>

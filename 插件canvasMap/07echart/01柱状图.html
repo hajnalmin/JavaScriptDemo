@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		.data{
+			width: 600px;
+			height: 400px;
+			margin: 0 auto;
+		}
+	</style>
+	<body>
+		<div class="data"></div>
+	</body>
+	<script src="js/echarts.common.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		var chart = echarts.init(document.querySelector('.data'));
+		
+		var options = {
+			
+			color:['red','pink','blue','green'],
+			
+			tooltip:{
+  				trigger: 'axis'	,
+  				 formatter: "{a}: {c}℃<br>{a1}: {c1}℃",
+  				axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+           			 type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        		}			
+			},
+			
+			title:{
+				text:'一周天气预报'
+			},
+			
+			legend:{
+				data:['天气预报']
+			},
+			
+			xAxis:{
+				
+				data:['周一','周二','周三','周四','周五','周六','周日']//水平刻度单位
+				
+			},
+			
+			yAxis:{
+				type:'value'// Y轴刻度单位
+			},
+			
+			series:[
+				
+				{
+					name:'最高温',
+					type:'bar',
+					data:[-3,3,4,12,5,0,18]
+				},
+				{
+					name:'最低温',
+					type:'bar',
+					data:[-4,23,14,32,15,20,8]
+				}
+				
+			]
+			
+		}
+		
+		chart.setOption(options);
+		
+	//	console.log(chart)
+		
+	</script>
+</html>

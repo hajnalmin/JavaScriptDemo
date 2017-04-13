@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+
+		</style>
+	</head>
+
+	<body>
+		<button>查看天气</button>
+
+		<div id="box" style="min-width:400px;height:400px"></div>
+
+		<script src='js/jquery.min.js'></script>
+		<script src='js/highcharts.js'></script>
+		<!--<script src='js/exporting.js'></script>-->
+		<!--<script src='js/highcharts-zh_CN.js'></script>-->
+		<script>
+			var data = {
+				"resultcode": "200",
+				"reason": "successed!",
+				"result": {
+					"sk": {
+						"temp": "-1",
+						"wind_direction": "西风",
+						"wind_strength": "2级",
+						"humidity": "38%",
+						"time": "10:59"
+					},
+					"today": {
+						"temperature": "-6℃~3℃",
+						"weather": "晴",
+						"weather_id": {
+							"fa": "00",
+							"fb": "00"
+						},
+						"wind": "微风",
+						"week": "星期三",
+						"city": "北京",
+						"date_y": "2016年11月23日",
+						"dressing_index": "冷",
+						"dressing_advice": "天气冷，建议着棉服、羽绒服、皮夹克加羊毛衫等冬季服装。年老体弱者宜着厚棉衣、冬大衣或厚羽绒服。",
+						"uv_index": "弱",
+						"comfort_index": "",
+						"wash_index": "较适宜",
+						"travel_index": "较不宜",
+						"exercise_index": "较不宜",
+						"drying_index": ""
+					},
+					"future": {
+						"day_20161123": {
+							"temperature": "-6℃~3℃",
+							"weather": "晴",
+							"weather_id": {
+								"fa": "00",
+								"fb": "00"
+							},
+							"wind": "微风",
+							"week": "星期三",
+							"date": "20161123"
+						},
+						"day_20161124": {
+							"temperature": "-6℃~4℃",
+							"weather": "晴",
+							"weather_id": {
+								"fa": "00",
+								"fb": "00"
+							},
+							"wind": "微风",
+							"week": "星期四",
+							"date": "20161124"
+						},
+						"day_20161125": {
+							"temperature": "-5℃~15℃",
+							"weather": "多云转霾",
+							"weather_id": {
+								"fa": "01",
+								"fb": "53"
+							},
+							"wind": "微风",
+							"week": "星期五",
+							"date": "20161125"
+						},
+						"day_20161126": {
+							"temperature": "-5℃~5℃",
+							"weather": "霾转晴",
+							"weather_id": {
+								"fa": "53",
+								"fb": "00"
+							},
+							"wind": "微风",
+							"week": "星期六",
+							"date": "20161126"
+						},
+						"day_20161127": {
+							"temperature": "-5℃~5℃",
+							"weather": "晴",
+							"weather_id": {
+								"fa": "00",
+								"fb": "00"
+							},
+							"wind": "微风",
+							"week": "星期日",
+							"date": "20161127"
+						},
+						"day_20161128": {
+							"temperature": "-6℃~4℃",
+							"weather": "晴",
+							"weather_id": {
+								"fa": "00",
+								"fb": "00"
+							},
+							"wind": "微风",
+							"week": "星期一",
+							"date": "20161128"
+						},
+						"day_20161129": {
+							"temperature": "-6℃~4℃",
+							"weather": "晴",
+							"weather_id": {
+								"fa": "00",
+								"fb": "00"
+							},
+							"wind": "微风",
+							"week": "星期二",
+							"date": "20161129"
+						}
+					}
+				},
+				"error_code": 0
+			};
+
+			$('button').click(function() {
+
+				var weeks = [];
+				var weather = [{ name: "最低温", data: [] }, { name: "最高温", data: [] }];
+
+				$.each(data.result.future, function() {
+
+					var cur = this;
+					var temp = cur.temperature.split('~');
+
+					temp[0] = parseFloat(temp[0]);
+					temp[1] = parseFloat(temp[1]);
+
+					weeks.push(cur.week);
+					weather[0].data.push(temp[0]);
+					weather[1].data.push(temp[1]);
+
+				});
+
+				var chart = new Highcharts.Chart('box', {
+					colors:["red","blue"],
+					title: {
+						text: '不同日期的气温',
+						x: -20
+					},
+					subtitle: {
+						text: '数据来源: hizhm.com',
+						x: -20
+					},
+					xAxis: {
+						categories: weeks
+					},
+					yAxis: {
+						title: {
+							text: '温度 (°C)'
+						},
+						plotLines: [{
+							value: 0,
+							width: 1,
+							color: '#808080'
+						}]
+					},
+					tooltip: {
+						valueSuffix: '°C'
+					},
+					legend: {
+						layout: 'vertical',
+						align: 'right',
+						verticalAlign: 'middle',
+						borderWidth: 0
+					},
+					series: weather
+				});
+
+			});
+		</script>
+	</body>
+
+</html>
